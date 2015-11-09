@@ -49,4 +49,13 @@ end
 #Api gems
 gem 'active_model_serializers'
 
+group :test do
+  gem 'rspec-rails'
+  gem 'factory_girl_rails'
+  gem 'ffaker'
+  gem 'shoulda-matchers'
+end
+
+gem "devise"
+
 ruby "2.2.1"
