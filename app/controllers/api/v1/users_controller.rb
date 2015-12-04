@@ -1,5 +1,15 @@
 class Api::V1::UsersController < ApplicationController
   respond_to :json
+  before_filter :cors_set_access_control_headers
+
+  # For all responses in this controller, return the CORS access control headers.
+  def cors_set_access_control_headers
+    headers['Access-Control-Allow-Origin'] = '*'
+    headers['Access-Control-Allow-Methods'] = 'POST, PUT, DELETE, GET, OPTIONS'
+    headers['Access-Control-Request-Method'] = '*'
+    headers['Access-Control-Allow-Headers'] = 'Origin, X-Requested-With, Content-Type, Accept, Authorization'
+    headers['Access-Control-Max-Age'] = "10"
+  end
 
   def show
     respond_with User.find(params[:id])
