@@ -11,7 +11,32 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151204122537) do
+ActiveRecord::Schema.define(version: 20151208140041) do
+
+  create_table "comments", force: :cascade do |t|
+    t.string   "body"
+    t.integer  "user_id"
+    t.integer  "port_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "comments", ["port_id"], name: "index_comments_on_port_id"
+  add_index "comments", ["user_id"], name: "index_comments_on_user_id"
+
+  create_table "ports", force: :cascade do |t|
+    t.string   "name"
+    t.string   "state"
+    t.string   "description"
+    t.integer  "node_id"
+    t.integer  "customer_id"
+    t.boolean  "reserved",    default: false
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
+  end
+
+  add_index "ports", ["customer_id"], name: "index_ports_on_customer_id"
+  add_index "ports", ["node_id"], name: "index_ports_on_node_id"
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false

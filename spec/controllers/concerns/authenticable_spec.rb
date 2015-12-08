@@ -11,7 +11,7 @@ RSpec.describe Api::V1::SessionsController, type: :controller do
   describe "#current_user" do
     before do
       @user = FactoryGirl.create :user
-      request.headers["Authorization"] = @user.auth_token
+      api_authorization_header @user.auth_token
       authentication.stub(:request).and_return(request)
     end
     it "returns the user from the authorization header" do

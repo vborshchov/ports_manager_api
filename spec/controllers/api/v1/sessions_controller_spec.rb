@@ -42,7 +42,7 @@ RSpec.describe Api::V1::SessionsController, type: :controller do
 
     before(:each) do
       @user = FactoryGirl.create :user
-      sign_in @user
+      api_authorization_header @user.auth_token
       delete :destroy, id: @user.auth_token
     end
 
