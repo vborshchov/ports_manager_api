@@ -55,5 +55,7 @@ describe User do
       expect(@user.auth_token).not_to eql existing_user.auth_token
     end
   end
+
+  # it { should have_many(:comments) }
   
 end
