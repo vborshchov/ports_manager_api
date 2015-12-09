@@ -1,8 +1,8 @@
 FactoryGirl.define do
   factory :comment do
     body {FFaker::Lorem.sentence}
-    users nil
-    ports nil
+    user nil
+    port nil
   end
 
 end
