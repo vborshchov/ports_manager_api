@@ -56,6 +56,6 @@ describe User do
     end
   end
 
-  # it { should have_many(:comments) }
+  it { should have_many(:comments) }
   
 end

@@ -18,8 +18,8 @@ FactoryGirl.define do
     name { ["Gi0/",""].sample + (rand(37)+1).to_s }
     state { ["admin down", "down", "up"].sample }
     description { FFaker::Lorem.sentence }
-    # node
-    # customer
+    node
+    customer
     reserved false
   end
 

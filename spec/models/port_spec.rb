@@ -27,6 +27,6 @@ RSpec.describe Port, type: :model do
   it { should respond_to(:reserved) }
 
   it { should have_many(:comments) }
-  # it { should belong_to :node }
-  # it { should belong_to :customer }
+  it { should belong_to :node }
+  it { should belong_to :customer }
 end
