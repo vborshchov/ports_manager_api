@@ -19,4 +19,6 @@ class Port < ActiveRecord::Base
   has_many :comments
 
   validates :name, :state, presence: true
+
+  STATES = ["up", "down", "admin down"]
 end
