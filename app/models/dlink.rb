@@ -1,0 +1,2 @@
+class Dlink < Node
+end
