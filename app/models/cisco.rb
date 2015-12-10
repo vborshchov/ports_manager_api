@@ -1,4 +1,5 @@
 class Cisco < Node
+  require 'snmp'
 
   def get_ports
     @ports_arr = []

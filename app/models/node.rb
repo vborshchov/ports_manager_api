@@ -1,5 +1,4 @@
 class Node < ActiveRecord::Base
-  require 'snmp'
   # include SNMP
 
   belongs_to :location
