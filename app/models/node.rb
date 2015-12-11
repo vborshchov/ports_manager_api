@@ -41,6 +41,7 @@ class Node < ActiveRecord::Base
         end
       end
     rescue
+      # TODO error response
     end
     puts @ports_arr
   end
