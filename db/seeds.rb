@@ -29,7 +29,7 @@ end
 
 # Ports for Cisco
 Cisco.ids.each do |id|
-  (1..16).each do |i|
+  (1..18).each do |i|
     Port.create(name: "Gi0/#{i}", node_id: id, state: ["admin down", "down", "up"].sample, description: FFaker::Lorem.sentence, customer_id: random_item_id("customer", 0.1))
   end
 end

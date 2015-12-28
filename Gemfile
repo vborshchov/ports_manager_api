@@ -65,5 +65,6 @@ gem 'furatto'
 gem 'font-awesome-rails'
 gem 'simple_form'
 gem 'snmp'
+gem 'rails_admin'
 
 ruby "2.2.1"
