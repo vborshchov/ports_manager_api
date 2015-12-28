@@ -22,15 +22,17 @@ RailsAdmin.config do |config|
   config.actions do
     dashboard                     # mandatory
     index                         # mandatory
-    new
+    new do
+      only ['Customer', 'Comment']
+    end
     export
     bulk_delete
     show
     edit do
-      only ['Port']
+      only ['Port', 'Customer', 'Comment']
     end
     delete do
-      only ['Customer']
+      only ['Customer', 'Comment']
     end
     show_in_app
 
@@ -38,6 +40,23 @@ RailsAdmin.config do |config|
     # history_index
     # history_show
   end
+
+  config.model 'User' do
+    list do
+      field :email
+      field :last_sign_in_at
+      field :last_sign_in_ip
+    end
+  end
+
+  %w(Node Cisco Zte Dlink).each do |imodel|
+    config.model "#{imodel}" do
+      list do
+        exclude_fields :created_at, :updated_at
+      end
+    end
+  end
+
 
   config.model 'Port' do
     list do
@@ -48,12 +67,15 @@ RailsAdmin.config do |config|
       end
 
       configure :node_id, :enum do
+        help 'Please select Node'
         enum do
           Node.all.collect {|p| [p.name, p.id]}
         end
       end
 
       filters [:node_id]
+
+      exclude_fields :created_at, :node
       
     end
 
@@ -63,6 +85,9 @@ RailsAdmin.config do |config|
           read_only true
         end
       end
+    end
+
+    show do
     end
   end
 end

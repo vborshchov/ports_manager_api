@@ -16,9 +16,13 @@
 class Port < ActiveRecord::Base
   belongs_to :node
   belongs_to :customer
-  has_many :comments
+  has_many :comments, dependent: :destroy
 
   validates :name, :state, presence: true
 
   STATES = ["up", "down", "admin down"]
+
+  scope :reserved, -> { where(reserved: true) }
+  scope :not_reserved, -> { where(reserved: false) }
+
 end

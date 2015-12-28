@@ -3,7 +3,7 @@ class Node < ActiveRecord::Base
   # include SNMP
 
   belongs_to :location
-  has_many :ports
+  has_many :ports, dependent: :destroy
 
   VALID_IPV4_REGEX = /\A(25[0-5]|2[0-4]\d|[1]\d\d|[1-9]\d|[1-9])(\.(25[0-5]|2[0-4]\d|[1]\d\d|[1-9]\d|\d)){3}\z/i
   validates :ip, presence: true, format: { with: VALID_IPV4_REGEX }, uniqueness: true
@@ -11,6 +11,10 @@ class Node < ActiveRecord::Base
   scope :ciscos, -> { where(type: 'Cisco') }
   scope :dlinks, -> { where(type: 'Dlink') }
   scope :ztes, -> { where(type: 'Zte') }
+
+  rails_admin do
+    exclude_fields :created_at, :updated_at
+  end
 
   def get_ports
     @ports_info_arr = []
