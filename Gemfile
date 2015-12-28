@@ -46,6 +46,7 @@ group :development do
   gem 'spring'
 
   gem 'annotate'
+  gem 'quiet_assets'
 end
 
 #Api gems

@@ -1,3 +1,18 @@
+# == Schema Information
+#
+# Table name: nodes
+#
+#  id          :integer          not null, primary key
+#  name        :string
+#  ip          :string
+#  location_id :integer
+#  type        :string
+#  created_at  :datetime         not null
+#  updated_at  :datetime         not null
+#  model       :string
+#  fttb        :boolean          default(FALSE)
+#
+
 require 'rails_helper'
 
 RSpec.describe Node, type: :model do

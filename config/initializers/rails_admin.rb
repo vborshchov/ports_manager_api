@@ -69,13 +69,12 @@ RailsAdmin.config do |config|
       configure :node_id, :enum do
         help 'Please select Node'
         enum do
-          Node.all.collect {|p| [p.name, p.id]}
+          Node.order(:name).collect {|p| [p.name, p.id]}
         end
       end
-
       filters [:node_id]
 
-      exclude_fields :created_at, :node
+      exclude_fields :created_at, :id
       
     end
 

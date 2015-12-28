@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151209124534) do
+ActiveRecord::Schema.define(version: 20151228143528) do
 
   create_table "comments", force: :cascade do |t|
     t.string   "body"
@@ -43,11 +43,15 @@ ActiveRecord::Schema.define(version: 20151209124534) do
     t.string   "ip"
     t.integer  "location_id"
     t.string   "type"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
+    t.string   "model"
+    t.boolean  "fttb",        default: false
   end
 
+  add_index "nodes", ["fttb"], name: "index_nodes_on_fttb"
   add_index "nodes", ["location_id"], name: "index_nodes_on_location_id"
+  add_index "nodes", ["model"], name: "index_nodes_on_model"
 
   create_table "ports", force: :cascade do |t|
     t.string   "name"

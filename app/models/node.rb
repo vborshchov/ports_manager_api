@@ -1,3 +1,18 @@
+# == Schema Information
+#
+# Table name: nodes
+#
+#  id          :integer          not null, primary key
+#  name        :string
+#  ip          :string
+#  location_id :integer
+#  type        :string
+#  created_at  :datetime         not null
+#  updated_at  :datetime         not null
+#  model       :string
+#  fttb        :boolean          default(FALSE)
+#
+
 class Node < ActiveRecord::Base
   require 'snmp'
   # include SNMP
@@ -12,20 +27,21 @@ class Node < ActiveRecord::Base
   scope :dlinks, -> { where(type: 'Dlink') }
   scope :ztes, -> { where(type: 'Zte') }
 
-  rails_admin do
-    exclude_fields :created_at, :updated_at
-  end
-
   def get_ports
     @ports_info_arr = []
     host = self.ip
     host_community = (self.class.name == "Cisco") ? "sw3400" : "public"
     ifTable_columns = ["ifDescr", "ifAdminStatus", "ifOperStatus", "ifAlias"]
     begin
-      SNMP::Manager.open(:Host => host, :Community => host_community) do |manager|
+      SNMP::Manager.open(
+                      :host => host,
+                      :community => host_community,
+                      :timeout => 1,
+                      :retries => 2
+                    ) do |manager|
         response = manager.get(["sysName.0", "sysUpTime.0"])
         response.each_varbind do |vb|
-            puts "#{vb.name.to_s[/(?<=\:{2}).*(?=\.)/].split(/(?=[A-Z])/).join(" ")}  #{vb.value.to_s}"
+            # puts "#{vb.name.to_s[/(?<=\:{2}).*(?=\.)/].split(/(?=[A-Z])/).join(" ")}  #{vb.value.to_s}"
         end
         manager.walk(ifTable_columns) do |row|
           port_attributes = {}
