@@ -13,7 +13,7 @@ class Node < ActiveRecord::Base
   scope :ztes, -> { where(type: 'Zte') }
 
   def get_ports
-    @ports_arr = []
+    @ports_info_arr = []
     host = self.ip
     host_community = (self.class.name == "Cisco") ? "sw3400" : "public"
     ifTable_columns = ["ifDescr", "ifAdminStatus", "ifOperStatus", "ifAlias"]
@@ -37,12 +37,14 @@ class Node < ActiveRecord::Base
             end
             port_attributes[:state] = Port::STATES[state_index]
           end
-          @ports_arr << port_attributes
+          @ports_info_arr << port_attributes
         end
       end
+
     rescue
       # TODO error response
     end
-    @ports_arr
+
+    @ports_info_arr
   end
 end

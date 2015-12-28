@@ -2,7 +2,7 @@ class Dlink < Node
   require 'net/telnet'
 
   def get_ports
-    @ports_arr = []
+    @ports_info_arr = []
     host = self.ip
     tn = Net::Telnet::new(
       "Host" => host,
@@ -50,16 +50,17 @@ class Dlink < Node
       port_attributes[:name] = cuper[0]
       state_index = (cuper[-4].to_s + "_").downcase <=> (fiber[-4].to_s + "_").downcase
       port_attributes[:state] = (state_index < 0) ? "up" : "down"
-      @ports_arr << port_attributes
+      @ports_info_arr << port_attributes
     end
 
     lines[16..31].each do |line|
       port_attributes = {}
       port_attributes[:name] = line[0]
       port_attributes[:state] = (line[-4].to_s =~ /Down/) ? "down" : "up"
-      @ports_arr << port_attributes
+      @ports_info_arr << port_attributes
     end
-    puts @ports_arr
+
+    @ports_info_arr
   end
 
 end
