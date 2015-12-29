@@ -1,3 +1,5 @@
+require File.join(Rails.root, "lib", "rails_admin", "without_ports")
+
 RailsAdmin.config do |config|
 
   ### Popular gems integration
@@ -34,6 +36,9 @@ RailsAdmin.config do |config|
     delete do
       only ['Customer', 'Comment']
     end
+    without_ports do
+      only ['Node', 'Zte', 'Dlink', 'Cisco']
+    end
     show_in_app
 
     ## With an audit adapter, you can add:
@@ -52,7 +57,7 @@ RailsAdmin.config do |config|
   %w(Node Cisco Zte Dlink).each do |imodel|
     config.model "#{imodel}" do
       list do
-        exclude_fields :created_at, :updated_at
+        exclude_fields :created_at, :updated_at, :id
       end
     end
   end

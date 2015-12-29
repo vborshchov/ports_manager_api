@@ -27,6 +27,11 @@ class Node < ActiveRecord::Base
   scope :dlinks, -> { where(type: 'Dlink') }
   scope :ztes, -> { where(type: 'Zte') }
 
+  def self.without_ports
+    @nodes = self.includes(:ports).references(:ports).where('ports.id IS NULL')
+  end
+
+
   def get_ports
     @ports_info_arr = []
     host = self.ip
