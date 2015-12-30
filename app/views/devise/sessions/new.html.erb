@@ -1,0 +1,22 @@
+<div class="row">
+  <div class="text-center">
+    <%= image_tag("ukrtelecom_logo.png", alt: "Укртелеком") %>
+  </div>
+  <div class="text-center">
+    <h2>Log in to Ports manager</h2>
+  </div>
+</div>
+
+<%= simple_form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+  <div class="form-inputs">
+    <%= f.input :email, required: false, autofocus: true %>
+    <%= f.input :password, required: false %>
+    <%= f.input :remember_me, as: :boolean if devise_mapping.rememberable? %>
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit, "Log in" %>
+  </div>
+<% end %>
+
+<%= render "devise/shared/links" %>

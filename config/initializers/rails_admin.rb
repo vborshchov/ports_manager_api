@@ -5,10 +5,10 @@ RailsAdmin.config do |config|
   ### Popular gems integration
 
   ## == Devise ==
-  # config.authenticate_with do
-  #   warden.authenticate! scope: :user
-  # end
-  # config.current_user_method(&:current_user)
+  config.authenticate_with do
+    warden.authenticate! scope: :user
+  end
+  config.current_user_method(&:current_user)
 
   ## == Cancan ==
   # config.authorize_with :cancan
@@ -66,7 +66,7 @@ RailsAdmin.config do |config|
   config.model 'Port' do
     list do
       items_per_page 36
-      
+
       configure :id do
         sort_reverse false   # will sort id increasing ('asc') first ones first (default is last ones first)
       end

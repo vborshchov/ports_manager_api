@@ -21,6 +21,10 @@ module RailsAdmin
         register_instance_option :collection do
           true
         end
+
+        register_instance_option :link_icon do
+          'icon-warning-sign'
+        end
       end
     end
   end
