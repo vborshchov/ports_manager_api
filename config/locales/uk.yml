@@ -1,0 +1,99 @@
+uk:
+  activerecord:
+    models:
+      comment:
+        zero: "Коментарів"
+        one: "Коментар"
+        few: "Коментарів"
+        many: "Коментарів"
+        other: "Коментарі"
+      port:
+        zero: "Портів"
+        one: "Порт"
+        few: "Портів"
+        many: "Портів"
+        other: "Портів"
+      node:
+        zero: "Комутаторів"
+        one: "Комутатор"
+        few: "Комутаторів"
+        many: "Комутаторів"
+        other: "Комутатори"
+      cisco:
+        zero: "cisco"
+        one: "cisco"
+        few: "ciscos"
+        many: "ciscos"
+        other: "ciscos"
+      dlink:
+        zero: "dlink"
+        one: "dlink"
+        few: "dlinks"
+        many: "dlinks"
+        other: "dlinks"
+      zte:
+        zero: "zte"
+        one: "zte"
+        few: "ztes"
+        many: "ztes"
+        other: "ztes"
+      customer:
+        zero: "Абонентів"
+        one: "Абонент"
+        few: "Абонентів"
+        many: "Абонентів"
+        other: "Абоненти"
+      location:
+        zero: "Локацій"
+        one: "Локація"
+        few: "Локацій"
+        many: "Локацій"
+        other: "Локації"
+      user:
+        zero: "Користувачів"
+        one: "Користувач"
+        few: "Користувачів"
+        many: "Користувачів"
+        other: "Користувачі"
+    attributes:
+      comment:
+        body: "тіло"
+        user: "користувач"
+        port: "порт"
+        created_at: "дата/час створення"
+        updated_at: "дата/час оновлення"
+      port:
+        name: "ім’я"
+        state: "статус"
+        description: "опис"
+        node: "комутатор"
+        customer: "абонент"
+        reserved: "зарезервовано"
+        created_at: "дата/час створення"
+        updated_at: "дата/час оновлення"
+      node:
+        name: "назва"
+        ip: "IP адреса"
+        location: "локація"
+        type: "тип"
+        model: "модель"
+        fttb: "FTTB"
+        ports: "Порти"
+        created_at: "дата/час створення"
+        updated_at: "дата/час оновлення"
+      customer:
+        account: "особовий рахунок"
+        name: "назва"
+        created_at: "дата/час створення"
+        updated_at: "дата/час оновлення"
+      location:
+        name: "назва"
+        address: "адреса"
+        created_at: "дата/час створення"
+        updated_at: "дата/час оновлення"
+      user:
+        email: "електронна пошта"
+        last_sign_in_at: "дата/час останнього входу"
+        last_sign_in_ip: "остання IP адреса входу"
+        created_at: "дата/час створення"
+        updated_at: "дата/час оновлення"
