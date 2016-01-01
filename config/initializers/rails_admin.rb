@@ -11,7 +11,7 @@ RailsAdmin.config do |config|
   config.current_user_method(&:current_user)
 
   ## == Cancan ==
-  # config.authorize_with :cancan
+  config.authorize_with :cancan
 
   ## == Pundit ==
   # config.authorize_with :pundit
@@ -19,24 +19,22 @@ RailsAdmin.config do |config|
   ## == PaperTrail ==
   # config.audit_with :paper_trail, 'User', 'PaperTrail::Version' # PaperTrail >= 3.0.0
 
-  config.excluded_models << "User"
+  # config.excluded_models << "User"
   ### More at https://github.com/sferik/rails_admin/wiki/Base-configuration
 
   config.actions do
     dashboard                     # mandatory
     index                         # mandatory
-    new do
-      only ['Customer', 'Comment']
+    new
+    export do
+      only ['Node', 'Zte', 'Dlink', 'Cisco', 'Port', 'Customer']
     end
-    export
     bulk_delete
-    show
-    edit do
-      only ['Port', 'Customer', 'Comment']
+    show do
+      only ['Node', 'Zte', 'Dlink', 'Cisco', 'Port', 'Customer', 'Location', 'Port', 'Comment']
     end
-    delete do
-      only ['Customer', 'Comment']
-    end
+    edit
+    delete
     without_ports do
       only ['Node', 'Zte', 'Dlink', 'Cisco']
     end
@@ -53,6 +51,21 @@ RailsAdmin.config do |config|
       field :last_sign_in_at
       field :last_sign_in_ip
     end
+
+    export do
+      field :id
+      field :email
+      field :sign_in_count
+      field :last_sign_in_at
+      field :last_sign_in_ip
+      field :created_at
+      field :updated_at
+    end
+
+    edit do
+      field :email
+    end
+
   end
 
   %w(Node Cisco Zte Dlink).each do |imodel|
@@ -65,6 +78,7 @@ RailsAdmin.config do |config|
 
 
   config.model 'Port' do
+
     list do
       items_per_page 36
 
@@ -91,8 +105,6 @@ RailsAdmin.config do |config|
         end
       end
     end
-
-    show do
-    end
+    
   end
 end

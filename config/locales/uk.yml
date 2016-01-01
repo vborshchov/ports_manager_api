@@ -12,7 +12,7 @@ uk:
         one: "Порт"
         few: "Портів"
         many: "Портів"
-        other: "Портів"
+        other: "Порти"
       node:
         zero: "Комутаторів"
         one: "Комутатор"
@@ -22,21 +22,21 @@ uk:
       cisco:
         zero: "cisco"
         one: "cisco"
-        few: "ciscos"
-        many: "ciscos"
-        other: "ciscos"
+        few: "cisco"
+        many: "cisco"
+        other: "cisco"
       dlink:
         zero: "dlink"
         one: "dlink"
-        few: "dlinks"
-        many: "dlinks"
-        other: "dlinks"
+        few: "dlink"
+        many: "dlink"
+        other: "dlink"
       zte:
         zero: "zte"
         one: "zte"
-        few: "ztes"
-        many: "ztes"
-        other: "ztes"
+        few: "zte"
+        many: "zte"
+        other: "zte"
       customer:
         zero: "Абонентів"
         one: "Абонент"
@@ -92,8 +92,116 @@ uk:
         created_at: "дата/час створення"
         updated_at: "дата/час оновлення"
       user:
-        email: "електронна пошта"
         last_sign_in_at: "дата/час останнього входу"
         last_sign_in_ip: "остання IP адреса входу"
         created_at: "дата/час створення"
         updated_at: "дата/час оновлення"
+        current_password: "Поточний пароль"
+        email: Email
+        password: "Пароль"
+        password_confirmation: "Підтвердження пароля"
+        remember_me: "Запам'ятати мене"
+  devise:
+    confirmations:
+      new:
+        resend_confirmation_instructions: "Повторно надіслати інструкцію з підтвердженням"
+    mailer:
+      confirmation_instructions:
+        action: "Підтвердити мій аккаунт"
+        greeting: "Ласкаво просимо %{recipient}!"
+        instruction: "Ви можете підтвердити свою електронну пошту через посилання нижче:"
+      reset_password_instructions:
+        action: "Зміна паролю"
+        greeting: "Доброго дня %{recipient}!"
+        instruction: "Хтось подав запит на зміну вашого паролю, ви можете підтвердити зміну через посилання нижче."
+        instruction_2: "Якщо вам цього не потрібно, не звертайте увагу на це повідомлення."
+        instruction_3: "Ваш пароль не мінятиметься доки ви не перейдете за посиланням вище і створите новий."
+      unlock_instructions:
+        action: "Розблокувати мій обліковий запис"
+        greeting: "Доброго дня %{recipient}!"
+        instruction: "Натисніть на посилання нижче, щоб розблокувати обліковий запис:"
+        message: "Ваш обліковий запис був заблокований через велику кількості невдалих спроб входу."
+    passwords:
+      edit:
+        change_my_password: "Змінити мій пароль"
+        change_your_password: "Змінити ваш пароль"
+        confirm_new_password: "Підтвердіть новий пароль"
+        new_password: "Новий пароль"
+      new:
+        forgot_your_password: "Забули пароль?"
+        send_me_reset_password_instructions: "Відправити мені інструкції скидання паролів"
+    registrations:
+      edit:
+        are_you_sure: "Ви впевнені?"
+        cancel_my_account: "Скасувати мій обліковий запис"
+        currently_waiting_confirmation_for_email: "В даний час очікуємо підтвердження від: %{email}"
+        leave_blank_if_you_don_t_want_to_change_it: "залиште порожнім, якщо ви не хочете змінити його"
+        title: "Редагувати %{resource}"
+        unhappy: "Нещасний"
+        update: "Оновити"
+        we_need_your_current_password_to_confirm_your_changes: "введіть свій поточний пароль для підтвердження змін"
+      new:
+        sign_up: "Зареєструватись"
+    sessions:
+      new:
+        sign_in: "Увійти"
+    shared:
+      links:
+        back: "Назад"
+        didn_t_receive_confirmation_instructions: "Не отримали лист з підтвердженням?"
+        didn_t_receive_unlock_instructions: "Не отримали інструкції розблокування?"
+        forgot_your_password: "Забули пароль?"
+        sign_in: "Увійти"
+        sign_in_with_provider: "Увійти за допомогою %{provider}"
+        sign_up: "Зареєструватись"
+    unlocks:
+      new:
+        resend_unlock_instructions: "Повторно надіслати інструкції з розблокування"
+    failure:
+      user:
+        not_found_in_database: "Невірна комбінація email/пароль"
+    errors:
+      models:
+        user:
+          attributes:
+            email:
+              invalid: "невірний формат email"
+              blank: "не може бути пустим"
+  datetime:
+    distance_in_words:
+      x_days:
+        one: "1 д."
+        other: "%{count} д."
+      x_hours:
+        one: "1 год."
+        other: "%{count} год."
+      x_minutes:
+        one: "1 хв."
+        other: "%{count} хв."
+      about_x_days:
+        one: "близько одного д."
+        other: "близько %{count} д."
+      about_x_hours:
+        one: "близько однієї год."
+        other: "близько %{count} год."
+      about_x_minutes:
+        one: "близько однієї хв."
+        other: "близько %{count} хв."
+      less_than_x_days:
+        one: "менш ніж 1 д."
+        other: "менш ніж %{count} д."
+      less_than_x_hours:
+        one: "менш ніж 1 год."
+        other: "менш ніж %{count} год."
+      less_than_x_minutes:
+        one: "менш ніж 1 хв."
+        other: "менш ніж %{count} хв."
+      more_than_x_days:
+        one: "більше ніж 1 д."
+        other: "більше ніж %{count} д."
+      more_than_x_hours:
+        one: "більше ніж 1 год."
+        other: "більше ніж %{count} год."
+      more_than_x_minutes:
+        one: "більше ніж 1 хв."
+        other: "більше ніж %{count} хв."

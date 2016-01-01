@@ -6,10 +6,15 @@ Rails.application.routes.draw do
   devise_for :users
 
   devise_scope :user do
-    get "/" => "devise/sessions#new"
+    # authenticated :user do
+    #   get '/admin' => 'rails_admin/main#dashboard', as: :authenticated_root
+    # end
+
+    # unauthenticated do
+    #   get '/admin' => 'devise/sessions#new', as: :unauthenticated_root
+    # end
   end
 
-  root 'devise/sessions#new'
   
   # Api definition
   namespace :api, defaults: { format: :json }, constraints: { subdomain: 'api' }, path: '/'  do

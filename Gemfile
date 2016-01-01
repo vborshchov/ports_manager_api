@@ -31,7 +31,10 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 # gem 'capistrano-rails', group: :development
 
 # Twitter Bootstrap for Rails 4, 3.x Asset Pipeline
-gem "twitter-bootstrap-rails"
+gem 'twitter-bootstrap-rails'
+
+# CanCan is an authorization library for Ruby on Rails which restricts what resources a given user is allowed to access
+gem 'cancancan', '~> 1.10'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

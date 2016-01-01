@@ -27,6 +27,8 @@ class User < ActiveRecord::Base
   validates :auth_token, uniqueness: true
 
   has_many :comments
+
+  ROLES = %i[admin moderator engineer banned]
   
   def generate_authentication_token!
     begin
