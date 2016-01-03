@@ -154,6 +154,8 @@ uk:
         sign_in: "Увійти"
         sign_in_with_provider: "Увійти за допомогою %{provider}"
         sign_up: "Зареєструватись"
+      header:
+        ports_manager: "Менеджер портів"
     unlocks:
       new:
         resend_unlock_instructions: "Повторно надіслати інструкції з розблокування"

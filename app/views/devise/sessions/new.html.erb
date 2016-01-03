@@ -1,11 +1,4 @@
-<div class="row">
-  <div class="text-center">
-    <%= image_tag("ukrtelecom_logo.png", alt: "Укртелеком") %>
-  </div>
-  <div class="text-center">
-    <h3>Менеджер портів</h3>
-  </div>
-</div>
+<%= render "devise/shared/header" %>
 
 <%= simple_form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
   <div class="form-inputs">
@@ -15,8 +8,8 @@
   </div>
 
   <div class="form-actions">
-    <%= f.button :submit, "Log in" %>
+    <%= f.button :submit, t('.sign_in', :default => "Sign in") %>
   </div>
 <% end %>
 
-<%#= render "devise/shared/links" %>
+<%= render "devise/shared/links" %>

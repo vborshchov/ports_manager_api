@@ -36,6 +36,8 @@ gem 'twitter-bootstrap-rails'
 # CanCan is an authorization library for Ruby on Rails which restricts what resources a given user is allowed to access
 gem 'cancancan', '~> 1.10'
 
+gem 'devise-i18n-views'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
