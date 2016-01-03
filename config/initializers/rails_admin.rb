@@ -8,7 +8,10 @@ RailsAdmin.config do |config|
   config.authenticate_with do
     warden.authenticate! scope: :user
   end
-  config.current_user_method(&:current_user)
+
+  # Current_admin_user is the same method like standart current_user in devise.
+  # It's a hook for using devise in frontend (like Angular)
+  config.current_user_method(&:current_admin_user)
 
   ## == Cancan ==
   config.authorize_with :cancan
