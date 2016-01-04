@@ -21,7 +21,7 @@
 class User < ActiveRecord::Base
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
-  devise :database_authenticatable, :recoverable, :rememberable, :trackable, :validatable
+  devise :database_authenticatable, :recoverable, :rememberable, :trackable, :validatable, :timeoutable
 
   before_create :generate_authentication_token!
   validates :auth_token, uniqueness: true
@@ -34,5 +34,9 @@ class User < ActiveRecord::Base
     begin
       self.auth_token = Devise.friendly_token
     end while self.class.exists?(auth_token: auth_token)
+  end
+
+  def role_enum
+    ROLES.map{|el| [el.to_s]}
   end
 end
