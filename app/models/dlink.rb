@@ -62,7 +62,7 @@ class Dlink < Node
         fiber = enum_lines.next
         port_attributes[:name] = cuper[0]
         state_index = (cuper[-4].to_s + "_").downcase <=> (fiber[-4].to_s + "_").downcase
-        port_attributes[:state] = (state_index < 0) ? "up" : "down"
+        port_attributes[:state] = (state_index > 0) ? "up" : "down"
         @ports_info_arr << port_attributes
       end
 

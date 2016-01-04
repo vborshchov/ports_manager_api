@@ -63,7 +63,7 @@ RailsAdmin.config do |config|
   config.model 'User' do
     list do
       field :email
-      date_time_format_for :created_at, :updated_at, :last_sign_in_at, :current_sign_in_at
+      date_time_format_for :remember_created_at, :created_at, :updated_at, :last_sign_in_at, :current_sign_in_at
       fields :last_sign_in_ip, :remember_created_at, :sign_in_count, :current_sign_in_at, :current_sign_in_ip, :created_at, :updated_at, :auth_token do
         visible do
           bindings[:view]._current_user.role == "admin"
