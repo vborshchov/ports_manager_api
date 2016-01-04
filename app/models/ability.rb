@@ -11,19 +11,17 @@ class Ability
     can :without_ports, :all
     can :export, :all
     can :update, User, :id => user.id
-    can :update, [Port]
+    can :update, Port
     case user.role
       when "admin"
         can :manage, :all             # allow admins to do anything
       when "moderator"
         can :manage, [Location, Node, Zte, Dlink, Cisco, Comment]
       when "engineer"
+        can :create, [Customer, Comment]
+        can :update, [Customer, Comment]
       when "banned"
         cannot :dashboard
-        # cannot :read, :all
-        # cannot :update, [Port]
-        # cannot :without_ports, :all
-        # cannot :export, :all
     end
 
     #   user ||= User.new # guest user (not logged in)

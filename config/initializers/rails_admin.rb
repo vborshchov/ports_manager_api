@@ -1,5 +1,13 @@
 require File.join(Rails.root, "lib", "rails_admin", "without_ports")
 
+def date_time_format_for(*options)
+  options.each do |f|
+    configure f do
+      strftime_format "%H:%M:%S %d-%m-%Y"
+    end
+  end
+end
+
 RailsAdmin.config do |config|
 
   ### Popular gems integration
@@ -51,44 +59,69 @@ RailsAdmin.config do |config|
   config.model 'User' do
     list do
       field :email
-      field :last_sign_in_at
+      date_time_format_for :last_sign_in_at
       field :last_sign_in_ip
+      fields :remember_created_at, :sign_in_count, :current_sign_in_at, :current_sign_in_ip, :created_at, :updated_at, :auth_token do
+        visible do
+          bindings[:view]._current_user.role == :admin
+        end
+      end
+      date_time_format_for :created_at, :updated_at
     end
 
     export do
       field :id
       field :email
       field :sign_in_count
-      field :last_sign_in_at
       field :last_sign_in_ip
-      field :created_at
-      field :updated_at
+      date_time_format_for :last_sign_in_at, :created_at, :updated_at
     end
 
     edit do
       field :email
+      fields :password, :password_confirmation, :role do
+        visible do
+          bindings[:view]._current_user.role == "admin"
+        end
+      end
     end
-
   end
 
-  %w(Node Cisco Zte Dlink).each do |imodel|
+  %w(Node Cisco Zte Dlink Location Customer).each do |imodel|
     config.model "#{imodel}" do
       list do
         exclude_fields :created_at, :updated_at, :id
       end
+
+      export do
+        date_time_format_for :created_at, :updated_at
+      end
     end
   end
 
+  config.model 'Customer' do
+    create do
+      exclude_fields :ports
+    end
+
+    edit do
+      exclude_fields :ports
+    end
+  end
+
+  config.model 'Comment' do
+    export do
+      date_time_format_for :created_at, :updated_at
+    end
+  end
 
   config.model 'Port' do
-
     list do
       items_per_page 36
-
       configure :id do
         sort_reverse false   # will sort id increasing ('asc') first ones first (default is last ones first)
       end
-
+      date_time_format_for :updated_at
       configure :node_id, :enum do
         help 'Please select Node'
         enum do
@@ -96,9 +129,7 @@ RailsAdmin.config do |config|
         end
       end
       filters [:node_id]
-
       exclude_fields :created_at, :id
-      
     end
 
     edit do
@@ -108,6 +139,10 @@ RailsAdmin.config do |config|
         end
       end
     end
-    
+
+    export do
+      date_time_format_for :created_at, :updated_at
+    end
   end
+
 end
