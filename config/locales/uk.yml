@@ -101,6 +101,15 @@ uk:
         password: "Пароль"
         password_confirmation: "Підтвердження пароля"
         remember_me: "Запам'ятати мене"
+    errors:
+      models:
+        user:
+          attributes:
+            email:
+              invalid: "невірний формат email"
+              blank: "не може бути пустим"
+            auth_token:
+              taken: "вже використано"
   devise:
     confirmations:
       new:
@@ -162,13 +171,6 @@ uk:
     failure:
       user:
         not_found_in_database: "Невірна комбінація email/пароль"
-    errors:
-      models:
-        user:
-          attributes:
-            email:
-              invalid: "невірний формат email"
-              blank: "не може бути пустим"
   datetime:
     distance_in_words:
       x_days:
