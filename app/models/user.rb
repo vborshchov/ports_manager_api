@@ -39,4 +39,8 @@ class User < ActiveRecord::Base
   def role_enum
     ROLES.map{|el| [el.to_s]}
   end
+
+  def name
+    self.email.to_s
+  end
 end
