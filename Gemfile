@@ -38,6 +38,8 @@ gem 'cancancan', '~> 1.10'
 
 gem 'devise-i18n-views'
 
+gem 'paper_trail', '~> 4.0.0'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'

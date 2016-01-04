@@ -17,7 +17,7 @@ class Port < ActiveRecord::Base
   belongs_to :node
   belongs_to :customer
   has_many :comments, dependent: :destroy
-
+  has_paper_trail :only => [:state, :description, :customer_id, :reserved, :created_at, :updated_at]
   validates :name, :state, presence: true
 
   STATES = ["up", "down", "admin down"]
