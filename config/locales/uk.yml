@@ -110,6 +110,8 @@ uk:
               blank: "не може бути пустим"
             auth_token:
               taken: "вже використано"
+      messages:
+        record_invalid: 'Виникли помилки: %{errors}'
   devise:
     confirmations:
       new:
@@ -171,41 +173,258 @@ uk:
     failure:
       user:
         not_found_in_database: "Невірна комбінація email/пароль"
+  
+
+
+
+
+
+
+  date:
+    abbr_day_names:
+    - нд.
+    - пн.
+    - вт.
+    - ср.
+    - чт.
+    - пт.
+    - сб.
+    abbr_month_names:
+    -
+    - січ.
+    - лют.
+    - бер.
+    - квіт.
+    - трав.
+    - черв.
+    - лип.
+    - серп.
+    - вер.
+    - жовт.
+    - лист.
+    - груд.
+    day_names:
+    - неділя
+    - понеділок
+    - вівторок
+    - середа
+    - четвер
+    - п'ятниця
+    - субота
+    formats:
+      default: "%d.%m.%Y"
+      long: "%d %B %Y"
+      short: "%d %b"
+    month_names:
+    -
+    - Січня
+    - Лютого
+    - Березня
+    - Квітня
+    - Травня
+    - Червня
+    - Липня
+    - Серпня
+    - Вересня
+    - Жовтня
+    - Листопада
+    - Грудня
+    order:
+    - :day
+    - :month
+    - :year
   datetime:
     distance_in_words:
-      x_days:
-        one: "1 д."
-        other: "%{count} д."
-      x_hours:
-        one: "1 год."
-        other: "%{count} год."
-      x_minutes:
-        one: "1 хв."
-        other: "%{count} хв."
-      about_x_days:
-        one: "близько одного д."
-        other: "близько %{count} д."
       about_x_hours:
-        one: "близько однієї год."
-        other: "близько %{count} год."
-      about_x_minutes:
-        one: "близько однієї хв."
-        other: "близько %{count} хв."
-      less_than_x_days:
-        one: "менш ніж 1 д."
-        other: "менш ніж %{count} д."
-      less_than_x_hours:
-        one: "менш ніж 1 год."
-        other: "менш ніж %{count} год."
+        few: близько %{count} год.
+        many: близько %{count} год.
+        one: близько %{count} год.
+        other: близько %{count} год.
+      about_x_months:
+        few: близько %{count} міс.
+        many: близько %{count} міс.
+        one: близько %{count} міс.
+        other: близько %{count} міс.
+      about_x_years:
+        few: близько %{count} р.
+        many: близько %{count} р.
+        one: близько %{count} р.
+        other: близько %{count} р.
+      almost_x_years:
+        few: майже %{count} р.
+        many: майже %{count} р.
+        one: майже %{count} р.
+        other: майже %{count} р.
+      half_a_minute: півхвилини
       less_than_x_minutes:
-        one: "менш ніж 1 хв."
-        other: "менш ніж %{count} хв."
-      more_than_x_days:
-        one: "більше ніж 1 д."
-        other: "більше ніж %{count} д."
-      more_than_x_hours:
-        one: "більше ніж 1 год."
-        other: "більше ніж %{count} год."
-      more_than_x_minutes:
-        one: "більше ніж 1 хв."
-        other: "більше ніж %{count} хв."
+        few: менше %{count} хв.
+        many: менше %{count} хв.
+        one: менше %{count} хв.
+        other: менше %{count} хв.
+      less_than_x_seconds:
+        few: менше %{count} сек.
+        many: менше %{count} сек.
+        one: менше %{count} сек.
+        other: менше %{count} сек.
+      over_x_years:
+        few: більше %{count} р.
+        many: більше %{count} р.
+        one: більше %{count} р.
+        other: більше %{count} р.
+      x_days:
+        few: "%{count} дн."
+        many: "%{count} дн."
+        one: "%{count} дн."
+        other: "%{count} дн."
+      x_minutes:
+        few: "%{count} хв."
+        many: "%{count} хв."
+        one: "%{count} хв."
+        other: "%{count} хв."
+      x_months:
+        few: "%{count} міс."
+        many: "%{count} міс."
+        one: "%{count} міс."
+        other: "%{count} міс."
+      x_seconds:
+        few: "%{count} сек."
+        many: "%{count} сек."
+        one: "%{count} сек."
+        other: "%{count} сек."
+    prompts:
+      day: День
+      hour: Година
+      minute: Хвилина
+      month: Місяць
+      second: Секунда
+      year: Рік
+  errors:
+    format: "%{attribute} %{message}"
+    messages:
+      accepted: має бути прийнятий
+      blank: не може бути пустим
+      confirmation: не збігається з підтвердженням
+      empty: не може бути порожнім
+      equal_to: має дорівнювати %{count}
+      even: має бути парним
+      exclusion: зарезервовано
+      greater_than: має бути більше ніж %{count}
+      greater_than_or_equal_to: має бути більше ніж або дорівнювати %{count}
+      inclusion: не включено до переліку
+      invalid: недійсний
+      less_than: має бути менше ніж %{count}
+      less_than_or_equal_to: має бути менше ніж або дорівнювати %{count}
+      not_a_number: не число
+      not_an_integer: не э цілим числом
+      odd: має бути непарним
+      taken: вже зайнятий
+      too_long:
+        few: занадто довгий (максимум %{count} знаки)
+        many: занадто довгий (максимум %{count} знаків)
+        one: занадто довгий (максимум %{count} знак)
+        other: занадто довгий (максимум %{count} знаку)
+      too_short:
+        few: занадто короткий (мінімум %{count} знаки)
+        many: занадто короткий (мінімум %{count} знаків)
+        one: занадто короткий (мінімум %{count} знак)
+        other: занадто короткий (мінімум %{count} знаку)
+      wrong_length:
+        few: неправильна довжина (має бути %{count} знаки)
+        many: неправильна довжина (має бути %{count} знаків)
+        one: неправильна довжина (має бути %{count} знак)
+        other: неправильна довжина (має бути %{count} знаку)
+    template:
+      body: 'Помилки виявлено в таких полях:'
+      header:
+        few: "%{model} не збережено через %{count} помилки"
+        many: "%{model} не збережено через %{count} помилок"
+        one: "%{model} не збережено через %{count} помилку"
+        other: "%{model} не збережено через %{count} помилки"
+  helpers:
+    select:
+      prompt: 'Оберіть: '
+    submit:
+      create: Створити %{model}
+      submit: Зберегти %{model}
+      update: Зберегти %{model}
+  number:
+    currency:
+      format:
+        delimiter: " "
+        format: "%n %u"
+        precision: 2
+        separator: ","
+        significant: false
+        strip_insignificant_zeros: false
+        unit: грн.
+    format:
+      delimiter: " "
+      precision: 3
+      separator: ","
+      significant: false
+      strip_insignificant_zeros: false
+    human:
+      decimal_units:
+        format: "%n %u"
+        units:
+          billion:
+            few: Мільярдів
+            many: Мільярдів
+            one: Мільярд
+            other: Мільярдів
+          million:
+            few: Мільйонів
+            many: Мільйонів
+            one: Мільйон
+            other: Мільйонів
+          quadrillion:
+            few: Квадрильйонів
+            many: Квадрильйонів
+            one: Кквадрильйон
+            other: Квадрильйонів
+          thousand:
+            few: Тисяч
+            many: Тисяч
+            one: Тисяча
+            other: Тисяч
+          trillion:
+            few: Трильйонів
+            many: Трильйонів
+            one: Трильйон
+            other: Трильйонів
+          unit: ''
+      format:
+        delimiter: ''
+        precision: 1
+        significant: false
+        strip_insignificant_zeros: false
+      storage_units:
+        format: "%n %u"
+        units:
+          byte:
+            few: байти
+            many: байтів
+            one: байт
+            other: байту
+          gb: ГБ
+          kb: кБ
+          mb: МБ
+          tb: ТБ
+    percentage:
+      format:
+        delimiter: ''
+    precision:
+      format:
+        delimiter: ''
+  support:
+    array:
+      last_word_connector: " та "
+      two_words_connector: " і "
+      words_connector: ", "
+  time:
+    am: до полудня
+    formats:
+      default: "%a, %d %b %Y, %H:%M:%S %z"
+      long: "%d %B %Y, %H:%M"
+      short: "%d %b, %H:%M"
+    pm: по полудні

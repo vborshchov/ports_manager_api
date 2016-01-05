@@ -1,12 +1,8 @@
 require File.join(Rails.root, "lib", "rails_admin", "without_ports")
+require File.join(Rails.root, "lib", "rails_admin", "update_ports_info")
+require File.join(Rails.root, "lib", "rails_admin", "node_ports")
 
-def date_time_format_for(*options)
-  options.each do |f|
-    configure f do
-      strftime_format "%H:%M:%S %d-%m-%Y"
-    end
-  end
-end
+PaperTrail.config.version_limit = 5
 
 RailsAdmin.config do |config|
 
@@ -30,6 +26,12 @@ RailsAdmin.config do |config|
   ## == PaperTrail ==
   config.audit_with :paper_trail, 'Port', 'PaperTrail::Version' # PaperTrail >= 3.0.0
 
+  config.model PaperTrail::Version do
+    list do
+      items_per_page 36
+    end
+  end
+
   # config.excluded_models << "User"
   ### More at https://github.com/sferik/rails_admin/wiki/Base-configuration
 
@@ -46,24 +48,33 @@ RailsAdmin.config do |config|
     end
     edit
     delete
+
+    # Custom actions
     without_ports do
       only ['Node', 'Zte', 'Dlink', 'Cisco']
     end
+    node_ports do
+      only ['Node', 'Zte', 'Dlink', 'Cisco']
+    end
+    update_ports_info do
+      only ['Node', 'Zte', 'Dlink', 'Cisco']
+    end
+
     show_in_app
 
-    ## With an audit adapter, you can add:
+    # With an audit adapter, you can add:
     history_index do
       only ['Port']
     end
     history_show do
       only ['Port']
     end
+
   end
 
   config.model 'User' do
     list do
       field :email
-      date_time_format_for :remember_created_at, :created_at, :updated_at, :last_sign_in_at, :current_sign_in_at
       fields :last_sign_in_ip, :remember_created_at, :sign_in_count, :current_sign_in_at, :current_sign_in_ip, :created_at, :updated_at, :auth_token do
         visible do
           bindings[:view]._current_user.role == "admin"
@@ -76,7 +87,9 @@ RailsAdmin.config do |config|
       field :email
       field :sign_in_count
       field :last_sign_in_ip
-      date_time_format_for :last_sign_in_at, :created_at, :updated_at
+      field :last_sign_in_at
+      field :created_at
+      field :updated_at
     end
 
     edit do
@@ -90,31 +103,29 @@ RailsAdmin.config do |config|
   end
 
   config.model 'Customer' do
-    create do
-      exclude_fields :ports
-    end
-
     edit do
       exclude_fields :ports
     end
   end
   
-  %w(Node Cisco Zte Dlink Location Customer).each do |imodel|
+
+  %w(Node Cisco Zte Dlink).each do |imodel|
     config.model "#{imodel}" do
       list do
         exclude_fields :created_at, :updated_at, :id
       end
 
-      export do
-        date_time_format_for :created_at, :updated_at
+      edit do
+        exclude_fields :ports
       end
     end
   end
 
-
-  config.model 'Comment' do
-    export do
-      date_time_format_for :created_at, :updated_at
+  %w(Location Customer).each do |imodel|
+    config.model "#{imodel}" do
+      list do
+        exclude_fields :created_at, :updated_at, :id
+      end
     end
   end
 
@@ -124,7 +135,9 @@ RailsAdmin.config do |config|
       configure :id do
         sort_reverse false   # will sort id increasing ('asc') first ones first (default is last ones first)
       end
-      date_time_format_for :updated_at
+      configure :node do
+        searchable ["nodes.name", "nodes.id"]
+      end
       configure :node_id, :enum do
         help 'Please select Node'
         enum do
@@ -132,7 +145,7 @@ RailsAdmin.config do |config|
         end
       end
       filters [:node_id]
-      exclude_fields :created_at, :id, :versions
+      exclude_fields :created_at, :versions
     end
 
     edit do
@@ -150,9 +163,6 @@ RailsAdmin.config do |config|
 
     end
 
-    export do
-      date_time_format_for :created_at, :updated_at
-    end
   end
 
 end

@@ -9,6 +9,7 @@ class Ability
     can :dashboard              # grant access to the dashboard
     can :read, :all
     can :without_ports, :all
+    can :node_ports, :all
     can :export, :all
     can :update, User, :id => user.id
     can :update, Port
@@ -17,6 +18,7 @@ class Ability
         can :manage, :all             # allow admins to do anything
       when "moderator"
         can :manage, [Location, Node, Zte, Dlink, Cisco, Comment]
+        can :update_ports_info, :all
       when "engineer"
         can :create, [Customer, Comment]
         can :update, [Customer, Comment]

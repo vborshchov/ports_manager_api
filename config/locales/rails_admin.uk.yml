@@ -98,6 +98,13 @@ uk:
         menu: "Ноди без портів"
         breadcrumb: "Ноди без портів"
         link: "Ноди без портів"
+      node_ports:
+        title: "Порти"
+        menu: "Порти"
+        breadcrumb: "Порти"
+        link: "Порти"
+      update_ports_info:
+        bulk_link: "Оновити інформацію про порти"
     form:
       cancel: "Відмінити"
       basic_info: "Осоновна інформація"
