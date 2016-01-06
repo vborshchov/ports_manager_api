@@ -13,3 +13,8 @@
  *= require_tree .
  *= require_self
  */
+
+ .small, .authors {
+  color: grey;
+  font-size: 10px;
+ }
