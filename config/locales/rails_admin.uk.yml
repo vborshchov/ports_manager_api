@@ -103,8 +103,18 @@ uk:
         menu: "Порти"
         breadcrumb: "Порти"
         link: "Порти"
+      customer_ports:
+        title: "Порти для %{object_label}"
+        menu: "Порти для %{object_label}"
+        breadcrumb: "Порти для %{object_label}"
+        link: "Порти для %{object_label}"
       update_ports_info:
         bulk_link: "Оновити інформацію про порти"
+      reserved_ports:
+        title: "Зарезервовані порти"
+        menu: "Зарезервовані порти"
+        breadcrumb: "Зарезервовані порти"
+        link: "Зарезервовані порти"
     form:
       cancel: "Відмінити"
       basic_info: "Осоновна інформація"
