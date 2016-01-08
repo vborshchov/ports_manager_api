@@ -21,20 +21,20 @@ module RailsAdmin
             @objects = list_entries(@model_config, :destroy)
 
             start_time = Time.now
-            node_total_quantity = @objects.count
-            port_total_quantity = 0
-            @objects.each do |node|
-              port_total_quantity += node.ports.count if node.ports 
-            end
+            node_total_quantity   = @objects.count
+            node_quantity         = 0
+            port_total_quantity   = 0
             port_updated_quantity = 0
             port_created_quantity = 0
-            node_quantity         = 0
             port_passed_quantity  = 0
 
             @objects.each do |node|
-              ports = node.ports || []
               begin
-                node.get_ports.zip(ports).each do |pair|
+                ports = node.ports
+                port_total_quantity += ports.count
+                gotten_ports = node.get_ports
+                next if gotten_ports.empty?
+                gotten_ports.zip(ports).each do |pair|
                   # pair[0] - ports's attributes reseived from node
                   # pair[1] - existing port's attributes
                   if pair[1] # if port exist do
@@ -48,6 +48,7 @@ module RailsAdmin
                     port = Port.new(pair[0].merge({node_id: node.id}))
                     port.save
                     port_created_quantity += 1
+                    port_total_quantity += 1
                   end
                 end
                 node_quantity += 1
@@ -57,13 +58,13 @@ module RailsAdmin
             end
 
             begin
-              `notify-send "Оновлення інформації про порти" "Відпрацьовано #{node_quantity} комутаторів з #{node_total_quantity},\nпортів:\n    оновлено - #{port_updated_quantity}\n    пропущено - #{port_passed_quantity}\n    створено - #{port_created_quantity}.\nВсього портів: #{port_total_quantity + port_created_quantity}.\nВитрачено часу #{(Time.now.to_i - start_time.to_i)/60} хв. #{(Time.now.to_i - start_time.to_i)%60} сек." -i gtk-info`
+              `notify-send "Оновлення інформації про порти" "Оброблено #{node_quantity} комутаторів з #{node_total_quantity},\nпортів:\n    оновлено - #{port_updated_quantity}\n    пропущено - #{port_passed_quantity}\n    створено - #{port_created_quantity}.\nВсього портів: #{port_total_quantity + port_created_quantity}.\nВитрачено часу #{(Time.now.to_i - start_time.to_i)/60} хв. #{(Time.now.to_i - start_time.to_i)%60} сек." -i gtk-info`
             rescue
               puts "Обновление информации о портах\nВідпрацьовано #{node_quantity} комутаторів з #{node_total_quantity},\nпортів:\n    оновлено - #{port_updated_quantity}\n    пропущено - #{port_passed_quantity}\n    створено - #{port_created_quantity}.\nВсього портів: #{port_total_quantity + port_created_quantity}.\nВитрачено часу #{(Time.now.to_i - start_time.to_i)/60} хв. #{(Time.now.to_i - start_time.to_i)%60} сек."
             ensure
-              flash[:success] = "
+              flash[:notice] = "
                 Оброблено #{node_quantity} комутаторів з #{node_total_quantity}.
-                Оброблено портів:
+                Портів:
                   оновлено - #{port_updated_quantity},
                   пропущено - #{port_passed_quantity},
                   cтворено - #{port_created_quantity}.
