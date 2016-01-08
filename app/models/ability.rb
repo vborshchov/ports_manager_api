@@ -2,26 +2,31 @@ class Ability
   include CanCan::Ability
 
   def initialize(user)
-    # Define abilities for the passed in user here. For example:
-    #
-    # user ||= User.new # guest user (not logged in)
+    alias_action :create, :update, :to => :write
+
     can :access, :rails_admin   # grant access to rails_admin
     can :dashboard              # grant access to the dashboard
     can :read, :all
     can :without_ports, :all
+    can :reserved_ports, :all
+    # can :unreserved_ports, :all
     can :node_ports, :all
+    can :customer_ports, :all
     can :export, :all
-    can :update, User, :id => user.id
+    can :update, User, id: user.id
     can :update, Port
     case user.role
       when "admin"
         can :manage, :all             # allow admins to do anything
       when "moderator"
-        can :manage, [Location, Node, Zte, Dlink, Cisco, Comment]
+        can :manage, [Location, Node, Zte, Dlink, Cisco, Comment, Customer]
+        can :history, Port
         can :update_ports_info, :all
       when "engineer"
-        can :create, [Customer, Comment]
-        can :update, [Customer, Comment]
+        cannot :update, Port, reserved: true
+        can :write, Customer
+        can :create, Comment
+        can :edit, Comment, user_id: user.id
       when "banned"
         cannot :dashboard
     end

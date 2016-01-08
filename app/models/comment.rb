@@ -15,4 +15,8 @@ class Comment < ActiveRecord::Base
   belongs_to :port
 
   validates :body, presence: true, length: { minimum: 3, maximum: 140 }
+
+  def name
+    self.try(:body).to_s
+  end
 end
