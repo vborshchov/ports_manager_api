@@ -65,11 +65,10 @@ class Node < ActiveRecord::Base
           @ports_info_arr << port_attributes
         end
       end
-
     rescue
       # TODO error response
     end
-
     @ports_info_arr
   end
+
 end
