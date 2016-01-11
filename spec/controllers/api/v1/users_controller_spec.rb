@@ -49,7 +49,7 @@ RSpec.describe Api::V1::UsersController, type: :controller do
 
       it "renders the json errors on why the user could not be created" do
         user_response = json_response
-        expect(user_response[:errors][:email]).to include "can't be blank"
+        expect(user_response[:errors][:email]).to include "не може бути пустим"
       end
 
       it { should respond_with 422 }
@@ -92,7 +92,7 @@ RSpec.describe Api::V1::UsersController, type: :controller do
 
       it "renders the json errors on whye the user could not be created" do
         user_response = json_response
-        expect(user_response[:errors][:email]).to include "is invalid"
+        expect(user_response[:errors][:email]).to include "невірний формат email"
       end
 
       it { should respond_with 422 }
