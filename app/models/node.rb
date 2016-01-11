@@ -44,10 +44,10 @@ class Node < ActiveRecord::Base
                       :timeout => 1,
                       :retries => 2
                     ) do |manager|
-        response = manager.get(["sysName.0", "sysUpTime.0"])
-        response.each_varbind do |vb|
+        # response = manager.get(["sysName.0", "sysUpTime.0"])
+        # response.each_varbind do |vb|
             # puts "#{vb.name.to_s[/(?<=\:{2}).*(?=\.)/].split(/(?=[A-Z])/).join(" ")}  #{vb.value.to_s}"
-        end
+        # end
         manager.walk(ifTable_columns) do |row|
           port_attributes = {}
           state_index = -2 # this id for index in array of states

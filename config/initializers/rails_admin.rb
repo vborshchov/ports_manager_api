@@ -184,6 +184,9 @@ RailsAdmin.config do |config|
         visible do
           %w(admin).include? bindings[:view]._current_user.role
         end
+        pretty_value do
+          Node.find(bindings[:object].node_id).ip
+        end
       end
       filters [:node_id]
       exclude_fields :created_at, :versions, :id

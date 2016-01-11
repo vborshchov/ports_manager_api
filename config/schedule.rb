@@ -6,7 +6,7 @@
 #
 set :output, "/home/victor/sh/ports_manager_cron/cron_log.log"
 #
-every 1.hours do
+every 2.hours do
   # runner "puts Cisco.some_method"
   rake "nodes:update_ports_of_all"
 end
