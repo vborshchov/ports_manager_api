@@ -37,6 +37,12 @@ uk:
         few: "zte"
         many: "zte"
         other: "zte"
+      iskratel:
+        zero: "iskratel"
+        one: "iskratel"
+        few: "iskratel"
+        many: "iskratel"
+        other: "iskratel"
       customer:
         zero: "Абонентів"
         one: "Абонент"

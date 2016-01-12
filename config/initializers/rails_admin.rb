@@ -43,7 +43,7 @@ RailsAdmin.config do |config|
     index                         # mandatory
     new
     export do
-      only ['Node', 'Zte', 'Dlink', 'Cisco', 'Port', 'Customer']
+      only ['Node', 'Zte', 'Dlink', 'Cisco', 'Iskratel', 'Port', 'Customer']
     end
     bulk_delete
     show
@@ -52,16 +52,16 @@ RailsAdmin.config do |config|
 
     # Custom actions
     without_ports do
-      only ['Node', 'Zte', 'Dlink', 'Cisco']
+      only ['Node', 'Zte', 'Dlink', 'Cisco', 'Iskratel']
     end
     node_ports do
-      only ['Node', 'Zte', 'Dlink', 'Cisco']
+      only ['Node', 'Zte', 'Dlink', 'Cisco', 'Iskratel']
     end
     customer_ports do
       only ['Customer']
     end
     update_ports_info do
-      only ['Node', 'Zte', 'Dlink', 'Cisco']
+      only ['Node', 'Zte', 'Dlink', 'Cisco', 'Iskratel']
     end
     reserved_ports do
       only ['Port']
@@ -150,7 +150,7 @@ RailsAdmin.config do |config|
     end
   end
 
-  %w(Node Cisco Zte Dlink).each do |imodel|
+  %w(Node Cisco Zte Dlink Iskratel).each do |imodel|
     config.model "#{imodel}" do
       list do
         exclude_fields :created_at, :updated_at, :id
