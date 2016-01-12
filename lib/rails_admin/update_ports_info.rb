@@ -58,18 +58,15 @@ module RailsAdmin
             end
 
             begin
-              `notify-send "Оновлення інформації про порти" "Оброблено #{node_quantity} комутаторів з #{node_total_quantity},\nпортів:\n    оновлено - #{port_updated_quantity}\n    пропущено - #{port_passed_quantity}\n    створено - #{port_created_quantity}.\nВсього портів: #{port_total_quantity}.\nВитрачено часу #{(Time.now.to_i - start_time.to_i)/60} хв. #{(Time.now.to_i - start_time.to_i)%60} сек." -i gtk-info`
+              `notify-send "Оновлення інформації про порти" "Оброблено #{node_quantity} комутаторів з #{node_total_quantity},\nВсього #{port_total_quantity} портів:\n    оновлено - #{port_updated_quantity}\n    створено - #{port_created_quantity}.\nВитрачено часу #{(Time.now.to_i - start_time.to_i)/60} хв. #{(Time.now.to_i - start_time.to_i)%60} сек." -i gtk-info`
             rescue
-              puts "Обновление информации о портах\nВідпрацьовано #{node_quantity} комутаторів з #{node_total_quantity},\nпортів:\n    оновлено - #{port_updated_quantity}\n    пропущено - #{port_passed_quantity}\n    створено - #{port_created_quantity}.\nВсього портів: #{port_total_quantity}.\nВитрачено часу #{(Time.now.to_i - start_time.to_i)/60} хв. #{(Time.now.to_i - start_time.to_i)%60} сек."
+              puts "Обновление информации о портах\nВідпрацьовано #{node_quantity} комутаторів з #{node_total_quantity},\nпортів:\n    оновлено - #{port_updated_quantity}\n   створено - #{port_created_quantity}.\nВсього портів: #{port_total_quantity}.\nВитрачено часу #{(Time.now.to_i - start_time.to_i)/60} хв. #{(Time.now.to_i - start_time.to_i)%60} сек."
             ensure
               flash[:notice] = "
                 Оброблено #{node_quantity} комутаторів з #{node_total_quantity}.
-                Портів:
+                Всього #{port_total_quantity} портів:
                   оновлено - #{port_updated_quantity},
-                  пропущено - #{port_passed_quantity},
                   cтворено - #{port_created_quantity}.
-                Всього портів: #{port_total_quantity}.
-
                 Витрачено часу #{(Time.now.to_i - start_time.to_i)/60} хв. #{(Time.now.to_i - start_time.to_i)%60} сек."
               redirect_to back_or_index
             end

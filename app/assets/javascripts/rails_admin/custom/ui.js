@@ -1,5 +1,5 @@
 $(document).on('rails_admin.dom_ready', function(){
-  
+
   $('#port_comment_ids_field .ra-multiselect').remove();
 
   var $ports_customer_input = $('#port_customer_id_field .filtering-select input:text')

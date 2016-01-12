@@ -35,7 +35,7 @@ RailsAdmin.config do |config|
     end
   end
 
-  # config.excluded_models << "User"
+  config.excluded_models << "PaperTrail::VersionAssociation"
   ### More at https://github.com/sferik/rails_admin/wiki/Base-configuration
 
   config.actions do
@@ -174,6 +174,9 @@ RailsAdmin.config do |config|
       items_per_page 36
       configure :id do
         sort_reverse false   # will sort id increasing ('asc') first ones first (default is last ones first)
+        visible do
+          %w(admin).include? bindings[:view]._current_user.role
+        end
       end
       configure :node_id, :enum do
         label 'Вибір комутатора'
@@ -189,7 +192,7 @@ RailsAdmin.config do |config|
         end
       end
       filters [:node_id]
-      exclude_fields :created_at, :versions, :id
+      exclude_fields :created_at, :versions
     end
     nested do
       configure :comments do
