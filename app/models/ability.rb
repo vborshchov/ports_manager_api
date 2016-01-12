@@ -13,16 +13,17 @@ class Ability
     can :node_ports, :all
     can :customer_ports, :all
     can :export, :all
-    can :update, User, id: user.id
     can :update, Port
     case user.role
       when "admin"
         can :manage, :all             # allow admins to do anything
       when "moderator"
         can :manage, [Location, Node, Zte, Dlink, Cisco, Comment, Customer]
+        can :update, User, role: %w(moderator engineer banned)
         can :history, Port
         can :update_ports_info, :all
       when "engineer"
+        can :update, User, id: user.id
         cannot :update, Port, reserved: true
         can :write, Customer
         can :create, Comment

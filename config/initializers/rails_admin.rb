@@ -86,7 +86,7 @@ RailsAdmin.config do |config|
   config.model 'User' do
     visible do
       # controller bindings is available here. Example:
-      %w(admin).include? bindings[:controller].current_user.role
+      %w(admin moderator).include? bindings[:controller].current_user.role
     end
     list do
       field :email
@@ -107,11 +107,44 @@ RailsAdmin.config do |config|
       field :updated_at
     end
 
+    create do
+      field :email
+      fields :password, :password_confirmation do
+        visible do
+          %w(admin moderator).include? bindings[:view]._current_user.role
+        end
+      end
+      field :role, :enum do
+        enum do
+          if bindings[:view]._current_user.role == "moderator"
+            %w(moderator engineer banned)
+          elsif bindings[:view]._current_user.role == "admin"
+            %w(admin moderator engineer banned)
+          end
+        end
+        visible do
+          %w(admin moderator).include? bindings[:view]._current_user.role
+        end
+      end
+    end
+
     edit do
       field :email
-      fields :password, :password_confirmation, :role do
+      fields :password, :password_confirmation do
         visible do
           %w(admin).include? bindings[:view]._current_user.role
+        end
+      end
+      field :role, :enum do
+        enum do
+          if bindings[:view]._current_user.role == "moderator"
+            %w(moderator engineer banned)
+          elsif bindings[:view]._current_user.role == "admin"
+            %w(admin moderator engineer banned)
+          end
+        end
+        visible do
+          %w(admin moderator).include? bindings[:view]._current_user.role
         end
       end
     end
@@ -147,6 +180,8 @@ RailsAdmin.config do |config|
 
   config.model PaperTrail::Version do
     navigation_label 'Історія'
+    label 'версія'
+    label_plural 'версії'
   end
 
   config.model PaperTrail::VersionAssociation do
@@ -178,6 +213,17 @@ RailsAdmin.config do |config|
           %w(admin).include? bindings[:view]._current_user.role
         end
       end
+
+      # This config lead to problem with links in index view
+      # Links to related nodes disappear when user "go" to another page and when come back
+      # But when page was refresh link appear again
+      #
+      # configure :node do
+      #   pretty_value do
+      #     path = bindings[:view].show_path(model_name: 'node', id: bindings[:object].node_id)
+      #     (bindings[:view].tag(:a, href: path, title: bindings[:object].node.ip) << value.name).html_safe
+      #   end
+      # end
       configure :node_id, :enum do
         label 'Вибір комутатора'
         help 'Please select Node'

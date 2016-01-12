@@ -62,12 +62,13 @@ module RailsAdmin
             rescue
               puts "Обновление информации о портах\nВідпрацьовано #{node_quantity} комутаторів з #{node_total_quantity},\nпортів:\n    оновлено - #{port_updated_quantity}\n   створено - #{port_created_quantity}.\nВсього портів: #{port_total_quantity}.\nВитрачено часу #{(Time.now.to_i - start_time.to_i)/60} хв. #{(Time.now.to_i - start_time.to_i)%60} сек."
             ensure
-              flash[:notice] = "
-                Оброблено #{node_quantity} комутаторів з #{node_total_quantity}.
-                Всього #{port_total_quantity} портів:
-                  оновлено - #{port_updated_quantity},
-                  cтворено - #{port_created_quantity}.
-                Витрачено часу #{(Time.now.to_i - start_time.to_i)/60} хв. #{(Time.now.to_i - start_time.to_i)%60} сек."
+              flash[:notice] = [
+                "Оброблено #{node_quantity} комутаторів з #{node_total_quantity}.",
+                "Всього #{port_total_quantity} портів:",
+                  "оновлено - #{port_updated_quantity},",
+                  "cтворено - #{port_created_quantity}.",
+                  "Витрачено часу #{(Time.now.to_i - start_time.to_i)/60} хв. #{(Time.now.to_i - start_time.to_i)%60} сек."
+                  ].join(" \n")
               redirect_to back_or_index
             end
 
