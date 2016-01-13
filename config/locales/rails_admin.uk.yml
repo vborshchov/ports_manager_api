@@ -94,10 +94,10 @@ uk:
         menu: "Історія"
         breadcrumb: "Історія"
       without_ports:
-        title: "Ноди без портів"
-        menu: "Ноди без портів"
-        breadcrumb: "Ноди без портів"
-        link: "Ноди без портів"
+        title: "Пристрої без портів"
+        menu: "Пристрої без портів"
+        breadcrumb: "Пристрої без портів"
+        link: "Пристрої без портів"
       node_ports:
         title: "Порти"
         menu: "Порти"
