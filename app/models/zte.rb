@@ -24,6 +24,7 @@ class Zte < Node
       zte_model = self.model.match(/(?<=ZXR10)-*(\d{4})/)[1]
       @ports_info_arr = []
       host = self.ip
+      response = ""
       begin
         tn = Net::Telnet::new(
           "Host" => host,
@@ -35,7 +36,6 @@ class Zte < Node
         tn.waitfor(/:/) do |banner|
           zte_model_regex = Regexp.new("#{zte_model}|ZTE")
           if banner.match(zte_model_regex)
-            response = []
             tn.cmd("#{ENV["ZTE_USERNAME"]}\n#{ENV["ZTE_PASSWORD"]}") #{ |c| print c }
             port_number.to_i.times do |i|
               port = zte_model =~ /5250/ ? "1/#{i+1}" : i+1
@@ -48,8 +48,9 @@ class Zte < Node
           end
         end
         tn.close
+        p response.split("\n").size
 
-        # @ports_info_arr = parse_log("output_log.txt")
+        @ports_info_arr = parse_log(response)
 
       rescue Exception => e  
         puts e.message  
@@ -64,23 +65,18 @@ class Zte < Node
 
   # Parsing log file
   def parse_log(response)
-  # def parse_log(file)
     lines = []
-    # if File.exist?(file)
-    #   File.open(file, "r") do |f|
     response
         .split("\n")
         .reject(&:empty?)
         .each do |line|
           case line
             when /PortId|Description|PortName|PortEnable/
-              lines << line.match(/([A-Z]\w+(?= *:)) *: (\S+)\s/)[2]
+              lines << line.match(/[A-Z]\w+(?= *:) *: (\S+)\s*/)[1]
             when /Link/
               lines << line.match(/(?<=Link           : )(\w+)/)[1]
           end
         end
-    #   end
-    # end
     lines
         .slice_before(/\A1*\/*\d{1,2}\z/)
         .map do |id, description = "", port_enable, link|
