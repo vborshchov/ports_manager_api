@@ -57,10 +57,10 @@ class Node < ActiveRecord::Base
                 port_attributes[:name] = vb.value.to_s
               when /AdminStatus|OperStatus/
                 state_index += vb.value.to_s.to_i
+                port_attributes[:state] = Port::STATES[state_index]
               when /Alias/
                 port_attributes[:description] = vb.value unless vb.value == ''
             end
-            port_attributes[:state] = Port::STATES[state_index]
           end
           @ports_info_arr << port_attributes
         end
@@ -68,7 +68,7 @@ class Node < ActiveRecord::Base
     rescue
       # TODO error response
     end
-    @ports_info_arr
+    @ports_info_arr.delete_if {|attributes| attributes[:name] =~ /Vlan1|Null/}
   end
 
 end
