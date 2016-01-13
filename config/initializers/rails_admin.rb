@@ -214,25 +214,13 @@ RailsAdmin.config do |config|
         end
       end
 
-      # This config lead to problem with links in index view
-      # Links to related nodes disappear when user "go" to another page and when come back
-      # But when page was refresh link appear again
-      #
-      # configure :node do
-      #   pretty_value do
-      #     path = bindings[:view].show_path(model_name: 'node', id: bindings[:object].node_id)
-      #     (bindings[:view].tag(:a, href: path, title: bindings[:object].node.ip) << value.name).html_safe
-      #   end
-      # end
       configure :node_id, :enum do
         label 'Вибір комутатора'
         help 'Please select Node'
         enum do
           Node.order(:name).collect {|p| [p.name, p.id]}
         end
-        visible do
-          %w(admin).include? bindings[:view]._current_user.role
-        end
+        visible false
         pretty_value do
           Node.find(bindings[:object].node_id).ip
         end
