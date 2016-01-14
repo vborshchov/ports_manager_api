@@ -48,7 +48,6 @@ class Zte < Node
           end
         end
         tn.close
-        p response.split("\n").size
 
         @ports_info_arr = parse_log(response)
 
@@ -56,8 +55,7 @@ class Zte < Node
         puts e.message  
         puts e.backtrace.inspect
       ensure
-        # Remove unnecessary log file
-        # system('rm output_log.txt')
+        
       end
       @ports_info_arr
     end
