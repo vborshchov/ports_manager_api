@@ -14,4 +14,9 @@ class Customer < ActiveRecord::Base
 
   validates :account, presence: true, uniqueness: true, format: { with: /\A71\d{14}\z/ }
   validates_presence_of :name
+
+  def self.with_ports
+    @nodes = self.includes(:ports).references(:ports).where.not('ports.id IS NULL')
+  end
+
 end

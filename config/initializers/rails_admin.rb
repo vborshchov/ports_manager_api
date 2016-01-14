@@ -1,4 +1,5 @@
 require File.join(Rails.root, "lib", "rails_admin", "without_ports")
+require File.join(Rails.root, "lib", "rails_admin", "with_ports")
 require File.join(Rails.root, "lib", "rails_admin", "update_ports_info")
 require File.join(Rails.root, "lib", "rails_admin", "node_ports")
 require File.join(Rails.root, "lib", "rails_admin", "customer_ports")
@@ -53,6 +54,9 @@ RailsAdmin.config do |config|
     # Custom actions
     without_ports do
       only ['Node', 'Zte', 'Dlink', 'Cisco', 'Iskratel']
+    end
+    with_ports do
+      only ['Customer']
     end
     node_ports do
       only ['Node', 'Zte', 'Dlink', 'Cisco', 'Iskratel']

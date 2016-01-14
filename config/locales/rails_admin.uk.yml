@@ -94,10 +94,15 @@ uk:
         menu: "Історія"
         breadcrumb: "Історія"
       without_ports:
-        title: "Пристрої без портів"
-        menu: "Пристрої без портів"
-        breadcrumb: "Пристрої без портів"
-        link: "Пристрої без портів"
+        title: "%{model_label_plural} без портів"
+        menu: "%{model_label_plural} без портів"
+        breadcrumb: "%{model_label_plural} без портів"
+        link: "%{model_label_plural} без портів"
+      with_ports:
+        title: "%{model_label_plural} з портами"
+        menu: "%{model_label_plural} з портами"
+        breadcrumb: "%{model_label_plural} з портами"
+        link: "%{model_label_plural} з портами"
       node_ports:
         title: "Порти"
         menu: "Порти"
