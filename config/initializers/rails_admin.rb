@@ -194,17 +194,21 @@ RailsAdmin.config do |config|
 
   config.model 'Comment' do
     visible do
-      # controller bindings is available here. Example:
+      # controller bindings is available here.
       %w(admin).include? bindings[:controller].current_user.role
     end
     edit do
       field :body do; end
+      field :port_id, :hidden do
+        default_value do
+          bindings[:object].body
+        end
+      end
       field :user_id, :hidden do
         default_value do
           bindings[:view]._current_user.id
         end
       end
-      exclude_fields :port
     end
   end
 
@@ -232,11 +236,7 @@ RailsAdmin.config do |config|
       filters [:node_id]
       exclude_fields :created_at, :versions
     end
-    nested do
-      configure :comments do
-        hide
-      end
-    end
+
     edit do
       [:name, :state, :description, :node].each do |field|
         configure field do

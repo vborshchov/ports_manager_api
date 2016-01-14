@@ -1,6 +1,6 @@
 $(document).on('rails_admin.dom_ready', function(){
 
-  $('#port_comment_ids_field .ra-multiselect').remove();
+  $('#port_comment_ids_field .ra-multiselect').hide();
 
   var $ports_customer_input = $('#port_customer_id_field .filtering-select input:text')
   $('#port_reserved').on('click', function() {
