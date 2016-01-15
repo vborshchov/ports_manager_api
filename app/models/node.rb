@@ -15,7 +15,6 @@
 
 class Node < ActiveRecord::Base
   require 'snmp'
-  # include SNMP
 
   belongs_to :location
   has_many :ports, dependent: :destroy
@@ -23,14 +22,11 @@ class Node < ActiveRecord::Base
   VALID_IPV4_REGEX = /\A(25[0-5]|2[0-4]\d|[1]\d\d|[1-9]\d|[1-9])(\.(25[0-5]|2[0-4]\d|[1]\d\d|[1-9]\d|\d)){3}\z/i
   validates :ip, presence: true, format: { with: VALID_IPV4_REGEX }, uniqueness: true
 
-  scope :ciscos, -> { where(type: 'Cisco') }
-  scope :dlinks, -> { where(type: 'Dlink') }
-  scope :ztes, -> { where(type: 'Zte') }
-
-  def self.without_ports
-    @nodes = self.includes(:ports).references(:ports).where('ports.id IS NULL')
-  end
-
+  scope :ciscos,        -> { where(type: 'Cisco') }
+  scope :dlinks,        -> { where(type: 'Dlink') }
+  scope :ztes,          -> { where(type: 'Zte') }
+  scope :iskratels,     -> { where(type: 'Iskratel') }
+  scope :without_ports, -> { where("id NOT IN (SELECT node_id FROM ports)") }
 
   def get_ports
     @ports_info_arr = []

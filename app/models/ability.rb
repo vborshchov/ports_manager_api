@@ -7,10 +7,6 @@ class Ability
     can :access, :rails_admin   # grant access to rails_admin
     can :dashboard              # grant access to the dashboard
     can :read, :all
-    can :without_ports, :all
-    can :with_ports, :all
-    can :reserved_ports, :all
-    # can :unreserved_ports, :all
     can :node_ports, :all
     can :customer_ports, :all
     can :export, :all
@@ -29,6 +25,8 @@ class Ability
         can :write, Customer
         can :create, Comment
         can :edit, Comment, user_id: user.id
+      when "guest"
+        cannot :update, Port
       when "banned"
         cannot :dashboard
     end

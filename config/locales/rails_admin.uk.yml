@@ -155,3 +155,9 @@ uk:
         default_col_sep: ","
         col_sep: "Роздільник стовпців"
         col_sep_help: "Залишити пустим по замовчуванню  ('%{value}')" # value is default_col_sep
+    scopes:
+      _all: "всі"
+      reserved: "зарезервовані"
+      not_reserved: "не зарезервовані"
+      without_ports: "без портів"
+      with_ports: "з портами"

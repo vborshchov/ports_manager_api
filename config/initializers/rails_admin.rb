@@ -1,10 +1,6 @@
-require File.join(Rails.root, "lib", "rails_admin", "without_ports")
-require File.join(Rails.root, "lib", "rails_admin", "with_ports")
 require File.join(Rails.root, "lib", "rails_admin", "update_ports_info")
 require File.join(Rails.root, "lib", "rails_admin", "node_ports")
 require File.join(Rails.root, "lib", "rails_admin", "customer_ports")
-require File.join(Rails.root, "lib", "rails_admin", "reserved_ports")
-# require File.join(Rails.root, "lib", "rails_admin", "unreserved_ports")
 
 PaperTrail.config.version_limit = 5
 
@@ -52,12 +48,6 @@ RailsAdmin.config do |config|
     delete
 
     # Custom actions
-    without_ports do
-      only ['Node', 'Zte', 'Dlink', 'Cisco', 'Iskratel']
-    end
-    with_ports do
-      only ['Customer']
-    end
     node_ports do
       only ['Node', 'Zte', 'Dlink', 'Cisco', 'Iskratel']
     end
@@ -67,13 +57,6 @@ RailsAdmin.config do |config|
     update_ports_info do
       only ['Node', 'Zte', 'Dlink', 'Cisco', 'Iskratel']
     end
-    reserved_ports do
-      only ['Port']
-    end
-    # unreserved_ports do
-    #   only ['Port']
-    # end
-
 
     show_in_app
 
@@ -133,7 +116,11 @@ RailsAdmin.config do |config|
     end
 
     edit do
-      field :email
+      field :email do
+        read_only do
+          %w(admin).exclude? bindings[:view]._current_user.role
+        end
+      end
       fields :password, :password_confirmation do
         visible do
           %w(admin).include? bindings[:view]._current_user.role
@@ -144,7 +131,7 @@ RailsAdmin.config do |config|
           if bindings[:view]._current_user.role == "moderator"
             %w(moderator engineer banned)
           elsif bindings[:view]._current_user.role == "admin"
-            %w(admin moderator engineer banned)
+            User::ROLES
           end
         end
         visible do
@@ -157,6 +144,11 @@ RailsAdmin.config do |config|
   %w(Node Cisco Zte Dlink Iskratel).each do |imodel|
     config.model "#{imodel}" do
       list do
+        scopes [nil, :without_ports]
+        configure :location do
+          searchable [:address, :id]
+        end
+        filters [:location]
         exclude_fields :created_at, :updated_at, :id
       end
 
@@ -174,6 +166,7 @@ RailsAdmin.config do |config|
 
   config.model 'Customer' do
     list do
+      scopes [:with_ports, nil]
       exclude_fields :created_at, :updated_at, :id
     end
 
@@ -212,8 +205,9 @@ RailsAdmin.config do |config|
 
   config.model 'Port' do
     list do
+      scopes [nil, :reserved, :not_reserved]
       items_per_page 36
-      configure :id do
+      field :id do
         sort_reverse false   # will sort id increasing ('asc') first ones first (default is last ones first)
         visible do
           %w(admin).include? bindings[:view]._current_user.role
@@ -242,9 +236,14 @@ RailsAdmin.config do |config|
     end
 
     edit do
+      group :read do
+        label "Додаткова інформація"
+        active false
+      end
       [:name, :state, :description, :node].each do |field|
         configure field do
           read_only true
+          group :read
         end
       end
       include_all_fields
