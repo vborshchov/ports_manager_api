@@ -8,6 +8,7 @@ class Ability
     can :dashboard              # grant access to the dashboard
     can :read, :all
     can :without_ports, :all
+    can :with_ports, :all
     can :reserved_ports, :all
     # can :unreserved_ports, :all
     can :node_ports, :all

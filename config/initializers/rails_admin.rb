@@ -199,10 +199,8 @@ RailsAdmin.config do |config|
     end
     edit do
       field :body do; end
-      field :port_id, :hidden do
-        default_value do
-          bindings[:object].body
-        end
+      field :port_id do
+        hide
       end
       field :user_id, :hidden do
         default_value do
@@ -221,8 +219,11 @@ RailsAdmin.config do |config|
           %w(admin).include? bindings[:view]._current_user.role
         end
       end
-
-      configure :node_id, :enum do
+      field :name do; end
+      field :state do; end
+      field :description do; end
+      field :node do; end
+      field :node_id, :enum do
         label 'Вибір комутатора'
         help 'Please select Node'
         enum do
@@ -233,6 +234,9 @@ RailsAdmin.config do |config|
           Node.find(bindings[:object].node_id).ip
         end
       end
+      field :customer do; end
+      field :comments do; end
+      include_all_fields
       filters [:node_id]
       exclude_fields :created_at, :versions
     end
