@@ -6,7 +6,7 @@ namespace :nodes do
     args.with_defaults(:model_name => "Node", :node_ids => '')
     node_ids_array = args[:node_ids].split(' ').map{ |s| s.to_i }
 
-    model = args[:model_name]
+    model = args[:model_name].capitalize
 
     node_quantity         = 0
     port_total_quantity   = 0

@@ -1,9 +1,14 @@
 require 'api_constraints'
+require 'sidekiq/web'
 
 Rails.application.routes.draw do
   mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
   mount SabisuRails::Engine => "/sabisu_rails"
   devise_for :users
+
+  authenticate :user, lambda { |u| u.role == "admin" } do
+    mount Sidekiq::Web => '/sidekiq'
+  end
 
   devise_scope :user do
     # authenticated :user do

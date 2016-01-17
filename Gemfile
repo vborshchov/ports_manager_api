@@ -80,4 +80,8 @@ gem 'simple_form'
 gem 'snmp'
 gem 'rails_admin'
 
+gem 'redis', '~>3.2'
+gem 'sidekiq'
+gem 'sinatra', :require => nil
+
 ruby "2.2.1"
