@@ -42,7 +42,7 @@ class PortsWorker
       end
     end
 
-    url = "https://PUSHER_KEY:PUSHER_SECRET@api.pusherapp.com/apps/PUSHER_APP_ID"
+    url = "https://#{ENV["PUSHER_KEY"]}:#{ENV["PUSHER_SECRET"]}@api.pusherapp.com/apps/#{ENV["PUSHER_APP_ID"]}"
     Pusher.url = url
 
     begin

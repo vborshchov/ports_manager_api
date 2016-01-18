@@ -7,7 +7,7 @@ $(document).on('ready', function(){
   //    }
   //  };
 
-  var pusher = new Pusher('PUSHER_KEY');
+  var pusher = new Pusher('<%= ENV["PUSHER_KEY"] %>');
 
   var channel = pusher.subscribe('ports_updater');
   channel.bind('report', function(data) {
