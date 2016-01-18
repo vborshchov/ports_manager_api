@@ -16,7 +16,7 @@ class Ability
         can :manage, :all             # allow admins to do anything
       when "moderator"
         can :manage, [Location, Node, Zte, Dlink, Cisco, Iskratel, Comment, Customer]
-        can :update, User, role: %w(moderator engineer banned guest)
+        can :write, User, role: %w(moderator engineer banned guest)
         can :history, Port
         can :update_ports_info, :all
       when "engineer"

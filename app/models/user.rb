@@ -28,7 +28,7 @@ class User < ActiveRecord::Base
 
   has_many :comments
 
-  ROLES = %i[admin moderator engineer guest banned]
+  ROLES = %i[banned guest engineer moderator admin]
   
   def generate_authentication_token!
     begin

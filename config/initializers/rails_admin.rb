@@ -78,8 +78,8 @@ RailsAdmin.config do |config|
       %w(admin moderator).include? bindings[:controller].current_user.role
     end
     list do
-      field :email
-      fields :last_sign_in_ip, :role, :sign_in_count, :current_sign_in_at, :current_sign_in_ip, :remember_created_at, :created_at, :updated_at, :auth_token do
+      fields :email, :role do; end
+      fields :last_sign_in_ip,  :sign_in_count, :current_sign_in_at, :current_sign_in_ip, :remember_created_at, :created_at, :updated_at, :auth_token do
         visible do
           %w(admin).include? bindings[:view]._current_user.role
         end
@@ -106,9 +106,9 @@ RailsAdmin.config do |config|
       field :role, :enum do
         enum do
           if bindings[:view]._current_user.role == "moderator"
-            %w(moderator engineer banned)
+            User::ROLES - [:admin]
           elsif bindings[:view]._current_user.role == "admin"
-            %w(admin moderator engineer banned)
+            User::ROLES
           end
         end
         visible do
@@ -131,7 +131,7 @@ RailsAdmin.config do |config|
       field :role, :enum do
         enum do
           if bindings[:view]._current_user.role == "moderator"
-            %w(moderator engineer guest banned)
+            User::ROLES - [:admin]
           elsif bindings[:view]._current_user.role == "admin"
             User::ROLES
           end
