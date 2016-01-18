@@ -42,7 +42,9 @@ RailsAdmin.config do |config|
     export do
       only ['Node', 'Zte', 'Dlink', 'Cisco', 'Iskratel', 'Port', 'Customer']
     end
-    bulk_delete
+    bulk_delete do
+      only ['Customer', 'Port', 'User', 'Location', 'Comment']
+    end
     show
     edit
     delete do
@@ -228,7 +230,9 @@ RailsAdmin.config do |config|
         end
       end
       field :name do; end
-      field :state do; end
+      field :state do
+        column_width 90
+      end
       field :description do; end
       field :node do; end
       field :node_id, :enum do

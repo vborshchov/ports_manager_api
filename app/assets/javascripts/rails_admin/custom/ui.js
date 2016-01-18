@@ -10,11 +10,13 @@ $(document).on('ready', function(){
   var pusher = new Pusher('0bb4888942c37f010824');
 
   var channel = pusher.subscribe('ports_updater');
+  $.notify.defaults({
+    className: "info",
+    position: "bottom left",
+    autoHide: false
+  });
   channel.bind('report', function(data) {
-    $.notify(data['notification_text'], {
-      position: "bottom center",
-      autoHide: false
-    });
+    $.notify(data['notification_text']);
   });
 })
 
