@@ -1,4 +1,5 @@
 class PortsWorker
+  require "pusher"
   include Sidekiq::Worker
   sidekiq_options retry: false
 
@@ -41,8 +42,14 @@ class PortsWorker
       end
     end
 
+    url = "https://PUSHER_KEY:PUSHER_SECRET@api.pusherapp.com/apps/PUSHER_APP_ID"
+    Pusher.url = url
+
     begin
       `notify-send "Оновлення інформації про порти" "Оброблено #{node_quantity} комутаторів з #{node_total_quantity},\nВсього #{port_total_quantity} портів:\n    оновлено - #{port_updated_quantity}\n    створено - #{port_created_quantity}.\nВитрачено часу #{(Time.now.to_i - start_time.to_i)/60} хв. #{(Time.now.to_i - start_time.to_i)%60} сек." -i gtk-info`
+      Pusher.trigger("ports_updater", "report", {notification_text: "Оброблено #{node_quantity} комутаторів з #{node_total_quantity},\nВсього #{port_total_quantity} портів:\n  __оновлено - #{port_updated_quantity}\n  __створено - #{port_created_quantity}.\nВитрачено часу #{(Time.now.to_i - start_time.to_i)/60} хв. #{(Time.now.to_i - start_time.to_i)%60} сек."})
+    rescue Pusher::Error => e
+      puts e
     end
   end
 end

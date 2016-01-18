@@ -83,5 +83,6 @@ gem 'rails_admin'
 gem 'redis', '~>3.2'
 gem 'sidekiq'
 gem 'sinatra', :require => nil
+gem 'pusher'
 
 ruby "2.2.1"

@@ -1,3 +1,23 @@
+//= require_tree .
+
+$(document).on('ready', function(){
+  // Pusher.log = function(message) {
+  //    if (window.console && window.console.log) {
+  //      window.console.log(message);
+  //    }
+  //  };
+
+  var pusher = new Pusher('PUSHER_KEY');
+
+  var channel = pusher.subscribe('ports_updater');
+  channel.bind('report', function(data) {
+    $.notify(data['notification_text'], {
+      position: "bottom center",
+      autoHide: false
+    });
+  });
+})
+
 $(document).on('rails_admin.dom_ready', function(){
 
   $('#port_comment_ids_field .ra-multiselect').hide();
