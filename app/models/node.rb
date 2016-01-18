@@ -26,7 +26,7 @@ class Node < ActiveRecord::Base
   scope :dlinks,        -> { where(type: 'Dlink') }
   scope :ztes,          -> { where(type: 'Zte') }
   scope :iskratels,     -> { where(type: 'Iskratel') }
-  scope :without_ports, -> { where("id NOT IN (SELECT node_id FROM ports)") }
+  # scope :without_ports, -> { where("id NOT IN (SELECT node_id FROM ports)") }
 
   def get_ports
     @ports_info_arr = []

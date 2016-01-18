@@ -155,7 +155,7 @@ RailsAdmin.config do |config|
   %w(Node Cisco Zte Dlink Iskratel).each do |imodel|
     config.model "#{imodel}" do
       list do
-        scopes [nil, :without_ports]
+        # scopes [nil, :without_ports]
         configure :location do
           searchable [:address, :id]
         end
@@ -177,6 +177,9 @@ RailsAdmin.config do |config|
 
   config.model 'Customer' do
     list do
+      configure :account do
+        column_width 160
+      end 
       scopes [:with_ports, nil]
       exclude_fields :created_at, :updated_at, :id
     end

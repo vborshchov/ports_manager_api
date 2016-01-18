@@ -10,7 +10,7 @@ uk:
       filter_date_format: "dd.mm.yy" # a combination of 'dd', 'mm' and 'yy' with any delimiter. No other interpolation will be done!
       search: "Пошук"
       filter: "Фільтр"
-      refresh: "Оновити"
+      refresh: "Фільтрувати"
       show_all: "Показати всі"
       add_filter: "Додати фільтр"
       bulk_menu_title: "Вибрані елементи"
