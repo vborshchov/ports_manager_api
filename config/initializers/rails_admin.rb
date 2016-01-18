@@ -131,7 +131,7 @@ RailsAdmin.config do |config|
       field :role, :enum do
         enum do
           if bindings[:view]._current_user.role == "moderator"
-            %w(moderator engineer banned)
+            %w(moderator engineer guest banned)
           elsif bindings[:view]._current_user.role == "admin"
             User::ROLES
           end

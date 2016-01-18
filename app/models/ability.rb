@@ -20,6 +20,7 @@ class Ability
         can :history, Port
         can :update_ports_info, :all
       when "engineer"
+        cannot :read, User
         can :update, User, id: user.id
         cannot :update, Port, reserved: true
         can :write, Customer
@@ -28,6 +29,7 @@ class Ability
         can :destroy, Node # without this destroy ability method update_ports_info does not work
         can :update_ports_info, :all
       when "guest"
+        cannot :read, User
         cannot :update, Port
       when "banned"
         cannot :dashboard
