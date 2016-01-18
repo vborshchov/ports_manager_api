@@ -15,8 +15,8 @@ class Ability
       when "admin"
         can :manage, :all             # allow admins to do anything
       when "moderator"
-        can :manage, [Location, Node, Zte, Dlink, Cisco, Comment, Customer]
-        can :update, User, role: %w(moderator engineer banned)
+        can :manage, [Location, Node, Zte, Dlink, Cisco, Iskratel, Comment, Customer]
+        can :update, User, role: %w(moderator engineer banned guest)
         can :history, Port
         can :update_ports_info, :all
       when "engineer"
@@ -25,6 +25,8 @@ class Ability
         can :write, Customer
         can :create, Comment
         can :edit, Comment, user_id: user.id
+        can :destroy, Node # without this destroy ability method update_ports_info does not work
+        can :update_ports_info, :all
       when "guest"
         cannot :update, Port
       when "banned"

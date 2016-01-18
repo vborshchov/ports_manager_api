@@ -45,7 +45,9 @@ RailsAdmin.config do |config|
     bulk_delete
     show
     edit
-    delete
+    delete do
+      only ['Customer', 'Port', 'User', 'Location', 'Comment']
+    end
 
     # Custom actions
     node_ports do
@@ -77,7 +79,7 @@ RailsAdmin.config do |config|
     end
     list do
       field :email
-      fields :last_sign_in_ip, :remember_created_at, :sign_in_count, :current_sign_in_at, :current_sign_in_ip, :created_at, :updated_at, :auth_token do
+      fields :last_sign_in_ip, :role, :sign_in_count, :current_sign_in_at, :current_sign_in_ip, :remember_created_at, :created_at, :updated_at, :auth_token do
         visible do
           %w(admin).include? bindings[:view]._current_user.role
         end
@@ -136,6 +138,15 @@ RailsAdmin.config do |config|
         end
         visible do
           %w(admin moderator).include? bindings[:view]._current_user.role
+        end
+      end
+    end
+
+    show do
+      field :email
+      fields :role, :last_sign_in_ip, :remember_created_at, :sign_in_count, :current_sign_in_at, :current_sign_in_ip, :created_at, :updated_at, :auth_token do
+        visible do
+          %w(admin).include? bindings[:view]._current_user.role
         end
       end
     end
