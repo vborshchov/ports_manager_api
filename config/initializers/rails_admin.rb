@@ -80,7 +80,7 @@ RailsAdmin.config do |config|
       %w(admin moderator).include? bindings[:controller].current_user.role
     end
     list do
-      fields :email, :role do; end
+      fields :name, :email, :role
       fields :last_sign_in_ip,  :sign_in_count, :current_sign_in_at, :current_sign_in_ip, :remember_created_at, :created_at, :updated_at, :auth_token do
         visible do
           %w(admin).include? bindings[:view]._current_user.role
@@ -90,6 +90,7 @@ RailsAdmin.config do |config|
 
     export do
       field :id
+      field :name
       field :email
       field :sign_in_count
       field :last_sign_in_ip
@@ -99,6 +100,7 @@ RailsAdmin.config do |config|
     end
 
     create do
+      field :name
       field :email
       fields :password, :password_confirmation do
         visible do
@@ -120,6 +122,7 @@ RailsAdmin.config do |config|
     end
 
     edit do
+      field :name
       field :email do
         read_only do
           %w(admin).exclude? bindings[:view]._current_user.role
@@ -145,7 +148,7 @@ RailsAdmin.config do |config|
     end
 
     show do
-      field :email
+      fields :name, :email
       fields :role, :last_sign_in_ip, :remember_created_at, :sign_in_count, :current_sign_in_at, :current_sign_in_ip, :created_at, :updated_at, :auth_token do
         visible do
           %w(admin).include? bindings[:view]._current_user.role

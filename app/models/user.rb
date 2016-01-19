@@ -25,6 +25,8 @@ class User < ActiveRecord::Base
 
   before_create :generate_authentication_token!
   validates :auth_token, uniqueness: true
+  validates :email, presence: true
+  validates_format_of :email, :with => /\A(|(([A-Za-z0-9]+_+)|([A-Za-z0-9]+\-+)|([A-Za-z0-9]+\.+)|([A-Za-z0-9]+\++))*[A-Za-z0-9]+@((\w+\-+)|(\w+\.))*\w{1,63}\.[a-zA-Z]{2,6})\z/i
 
   has_many :comments
 
@@ -40,7 +42,4 @@ class User < ActiveRecord::Base
     ROLES.map{|el| [el.to_s]}
   end
 
-  def name
-    self.email.to_s
-  end
 end
