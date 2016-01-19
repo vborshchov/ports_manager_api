@@ -75,6 +75,7 @@ uk:
         node: "комутатор"
         customer: "абонент"
         reserved: "зарезервовано"
+        comments: "коментар"
         created_at: "дата/час створення"
         updated_at: "дата/час оновлення"
       node:

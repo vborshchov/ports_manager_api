@@ -148,8 +148,8 @@ RailsAdmin.config do |config|
     end
 
     show do
-      fields :name, :email
-      fields :role, :last_sign_in_ip, :remember_created_at, :sign_in_count, :current_sign_in_at, :current_sign_in_ip, :created_at, :updated_at, :auth_token do
+      fields :name, :email, :role
+      fields :last_sign_in_ip, :remember_created_at, :sign_in_count, :current_sign_in_at, :current_sign_in_ip, :created_at, :updated_at, :auth_token do
         visible do
           %w(admin).include? bindings[:view]._current_user.role
         end
@@ -205,10 +205,6 @@ RailsAdmin.config do |config|
   end
 
   config.model 'Comment' do
-    visible do
-      # controller bindings is available here.
-      %w(admin).include? bindings[:controller].current_user.role
-    end
     edit do
       field :body do; end
       field :port_id do
