@@ -13,12 +13,17 @@ module RailsAdmin
 
         register_instance_option :controller do
           Proc.new do
+            id =  if @object.class.name == "Port"
+                    @object.node_id
+                  else
+                    params[:id]
+                  end
             redirect_to(
               controller: 'main',
               action: 'index',
               model_name: "port",
               utf8: "✓",
-              "f[node_id][1][v]": params[:id]
+              "f[node_id][1][v]": id
             )
           end
         end

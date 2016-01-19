@@ -53,7 +53,7 @@ RailsAdmin.config do |config|
 
     # Custom actions
     node_ports do
-      only ['Node', 'Zte', 'Dlink', 'Cisco', 'Iskratel']
+      only ['Node', 'Zte', 'Dlink', 'Cisco', 'Iskratel', 'Port']
     end
     customer_ports do
       only ['Customer']

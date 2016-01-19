@@ -104,10 +104,10 @@ uk:
         breadcrumb: "%{model_label_plural} з портами"
         link: "%{model_label_plural} з портами"
       node_ports:
-        title: "Порти"
-        menu: "Порти"
-        breadcrumb: "Порти"
-        link: "Порти"
+        title: "Порти пристрою"
+        menu: "Порти пристрою"
+        breadcrumb: "Порти пристрою"
+        link: "Порти пристрою"
       customer_ports:
         title: "Порти для %{object_label}"
         menu: "Порти для %{object_label}"

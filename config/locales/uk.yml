@@ -72,7 +72,7 @@ uk:
         name: "ім’я"
         state: "статус"
         description: "опис"
-        node: "комутатор"
+        node: "пристрій"
         customer: "абонент"
         reserved: "зарезервовано"
         comments: "коментар"

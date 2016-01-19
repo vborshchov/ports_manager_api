@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160114105753) do
+ActiveRecord::Schema.define(version: 20160118213013) do
 
   create_table "comments", force: :cascade do |t|
     t.string   "body"
@@ -82,6 +82,7 @@ ActiveRecord::Schema.define(version: 20160114105753) do
     t.datetime "updated_at",                          null: false
     t.string   "auth_token",             default: ""
     t.string   "role"
+    t.string   "name"
   end
 
   add_index "users", ["auth_token"], name: "index_users_on_auth_token", unique: true
