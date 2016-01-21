@@ -33,6 +33,8 @@ class Dlink < Node
           response << tn.cmd("show ports")
           7.times { response << tn.cmd("n") }
           response << tn.cmd("q")
+          response << tn.cmd("show vlan")
+          response << tn.cmd("a")
           response << tn.cmd("logout")
         end
       end
@@ -55,9 +57,9 @@ class Dlink < Node
     result = []
     lines = []
 
-    response = response.split("\n")[6..75]
+    response = response.split("\n")
     response.each do |line|
-      if line =~ /\d\:\d{1,2}/
+      if line =~ /\d\:\d{1,2}/ || line =~ /Member Ports|VLAN Name/
         lines << line.gsub(/\r/, "").split(/ +/)
       end
     end
@@ -79,6 +81,48 @@ class Dlink < Node
       port_attributes[:name] = line[0]
       port_attributes[:state] = (line[-3].to_s =~ /Down/) ? "down" : "up"
       result << port_attributes
+    end
+
+    lines.shift(62)
+    description = []
+    lines.flatten.slice_before(/VID/).each do |a|
+      if a[6] =~ /_/
+        description << {name: a[10].split(",")[0], description: a[6]}
+      end
+    end
+
+    # Find ports with more than one vlan
+    names = description.map{|el| el[:name]}
+    names = names.select {|e| names.count(e) > 1}.uniq
+
+    # Find repeated hashes and group them by port name
+    rep = description.select{|el| names.include? el[:name] }
+    rep = rep.group_by{|x| x[:name]}.values
+
+    # Collect all description of each port
+    rep.map! do |el|
+      desc = []
+      port_name = ""
+      el.each do |hash|
+        desc << hash[:description]
+        port_name = hash[:name]
+      end
+      el = {name: port_name, description: desc.join(", ")}
+    end
+
+    #Remove from description array repeated elements
+    description_without_repeated_elem = description.select{|hash| names.exclude? hash[:name]}
+  
+    # Make proper description array
+    description = description_without_repeated_elem + rep
+
+    # Merge info about vlans to result array
+    description.each do |hash|
+      result.map do |port|
+        if port[:name] == hash[:name]
+          port.merge!(hash)
+        end
+      end
     end
 
     result
