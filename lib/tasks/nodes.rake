@@ -4,9 +4,9 @@ include ApplicationHelper
 namespace :nodes do
   desc "Update information about all ports of all nodes
     or nodes of certain type in the database"
-  task :update_ports_of_all, [:model_name, :node_ids] => :environment do |t, args|
+  task :update_ports, [:node_ids, :model_name] => :environment do |t, args|
     start_time = Time.now
-    args.with_defaults(:model_name => "Node", :node_ids => '')
+    args.with_defaults(:node_ids => '', :model_name => "Node")
     node_ids_array = args[:node_ids].split(' ').map{ |s| s.to_i }
 
     model = args[:model_name].capitalize
