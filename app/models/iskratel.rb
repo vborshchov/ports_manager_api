@@ -4,48 +4,43 @@ class Iskratel < Node
   def get_ports
     @ports_info_arr = []
     host = self.ip
+    response = ""
     begin
       tn = Net::Telnet::new(
         "Host" => host,
         "Timeout" => 1,
         "Waittime" => 0.5,
-        "Prompt" => /[#>:]/n,
-        "Output_log" => "output_log.txt"
+        "Prompt" => /[#>:]/n
       )
       tn.waitfor(/:/) do |banner|
         if banner.match("ISKRATEL Switching")
-          tn.cmd("guest\n\n") #{ |c| print c }
-          tn.cmd("show port all")
-          tn.cmd("show vlan port all")
-          tn.cmd("show vlan brief")
-          tn.cmd("logout")
+          response << tn.cmd("guest\n\n") #{ |c| print c }
+          response << tn.cmd("show port all")
+          response << tn.cmd("show vlan port all")
+          response << tn.cmd("show vlan brief")
+          response << tn.cmd("logout")
         end
       end
       tn.close
 
-      @ports_info_arr = parse_log("output_log.txt")
+      @ports_info_arr = parse_log(response)
 
     rescue Exception => e  
       puts e.message  
       puts e.backtrace.inspect
-    ensure
-      # Remove unnecessary log file
-      system('rm output_log.txt')
     end
     @ports_info_arr
 
   end
 
   # Parsing log file
-  def parse_log(file)
+  def parse_log(response)
     lines = []
-    if File.exist?(file)
-      File.open(file, "r") do |f|
-        f.each do |line|
-          lines << line.chomp
-        end
-      end
+
+    response = response.split("\n").each do |line|
+      lines << line.chomp
     end
+    
     names_and_states = []
     port_vlans = []
     vlan_names = []
@@ -55,7 +50,7 @@ class Iskratel < Node
             .slice_before(/ISKRATEL/)
             .to_a
     arr.pop
-    (arr[0] - arr[0].shift(4)).each do |line|
+    (arr[0] - arr[0].shift(1)).each do |line|
       match = line.match(/^([01]\/\d{1,2}).*(Enable|Disable).*(Up|Down)/)
       state = match[2] == "Enable" ? match[3].downcase : "admin down"
       names_and_states << {name: match[1], state: state}
