@@ -36,6 +36,7 @@ module ApplicationHelper
           # pair[1] - existing port's attributes
           if pair[1] # if port exist do
             pair[1].assign_attributes(pair[0])
+            pair[1].assign_attributes(reserved: false) if pair[1].state == "up"
             if pair[1].changed? && pair[1].save
               port_updated_quantity += 1
             else
