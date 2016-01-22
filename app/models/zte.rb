@@ -28,10 +28,9 @@ class Zte < Node
       begin
         tn = Net::Telnet::new(
           "Host" => host,
-          "Timeout" => 1,
+          "Timeout" => 2,
           "Waittime" => 0.5,
-          "Prompt" => /[#>:]/n#,
-          # "Output_log" => "output_log.txt"
+          "Prompt" => /[#>:]/n
         )
         tn.waitfor(/:/) do |banner|
           zte_model_regex = Regexp.new("#{zte_model}|ZTE")
@@ -51,9 +50,8 @@ class Zte < Node
 
         @ports_info_arr = parse_log(response)
 
-      rescue Exception => e  
-        puts e.message  
-        puts e.backtrace.inspect
+      rescue Exception => e
+        puts "#{e.message} for #{self.name} (#{self.ip})"
       ensure
         
       end

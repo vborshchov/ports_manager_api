@@ -61,8 +61,8 @@ class Node < ActiveRecord::Base
           @ports_info_arr << port_attributes
         end
       end
-    rescue
-      # TODO error response
+    rescue Exception => e
+      puts "#{e.message} for #{self.name} (#{self.ip})"
     end
     @ports_info_arr.delete_if {|attributes| attributes[:name] =~ /Vlan1|Null/}
   end

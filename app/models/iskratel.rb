@@ -25,9 +25,8 @@ class Iskratel < Node
 
       @ports_info_arr = parse_log(response)
 
-    rescue Exception => e  
-      puts e.message  
-      puts e.backtrace.inspect
+    rescue Exception => e
+      puts "#{e.message} for #{self.name} (#{self.ip})"
     end
     @ports_info_arr
 
