@@ -20,8 +20,8 @@
 
 class User < ActiveRecord::Base
   # Include default devise modules. Others available are:
-  # :confirmable, :lockable, :timeoutable and :omniauthable
-  devise :database_authenticatable, :recoverable, :rememberable, :trackable, :validatable, :timeoutable
+  # :confirmable, :lockable, :timeoutable, :recoverable and :omniauthable
+  devise :database_authenticatable, :rememberable, :trackable, :validatable, :timeoutable
 
   before_create :generate_authentication_token!
   validates :auth_token, uniqueness: true

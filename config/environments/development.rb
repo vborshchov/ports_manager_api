@@ -14,7 +14,7 @@ Rails.application.configure do
   config.action_controller.perform_caching = false
 
   # change to true to allow email to be sent during development
-  config.action_mailer.perform_deliveries = true
+  config.action_mailer.perform_deliveries = false
 
   # Don't care if the mailer can't send.
   config.action_mailer.raise_delivery_errors = false
@@ -42,15 +42,15 @@ Rails.application.configure do
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
 
-  config.action_mailer.default_url_options = { host: 'http://10.80.12.202', port: 3000 }
+  # config.action_mailer.default_url_options = { host: 'http://10.80.12.202', port: 3000 }
 
-  config.action_mailer.smtp_settings = {
-    address:              'smtp.mandrillapp.com',
-    port:                 587,
-    enable_starttls_auto: true,
-    user_name:            ENV["GMAIL_USERNAME"],
-    password:             ENV["MANDRILL_APIKEY"],
-    authentication:       'login',
-    domain:               'ports-manager.ck.ukrtelecom.net'
-  }
+  # config.action_mailer.smtp_settings = {
+  #   address:              'smtp.mandrillapp.com',
+  #   port:                 587,
+  #   enable_starttls_auto: true,
+  #   user_name:            ENV["GMAIL_USERNAME"],
+  #   password:             ENV["MANDRILL_APIKEY"],
+  #   authentication:       'login',
+  #   domain:               'ports-manager.ck.ukrtelecom.net'
+  # }
 end
