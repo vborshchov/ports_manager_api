@@ -5,6 +5,7 @@ require File.join(Rails.root, "lib", "rails_admin", "customer_ports")
 PaperTrail.config.version_limit = 5
 
 RailsAdmin.config do |config|
+  config.main_app_name = [ "Менеджер портів", ""]
 
   ### Popular gems integration
 
@@ -185,7 +186,7 @@ RailsAdmin.config do |config|
       configure :account do
         column_width 160
       end 
-      scopes [:with_ports, nil]
+      scopes [nil, :with_ports]
       exclude_fields :created_at, :updated_at, :id
     end
 

@@ -23,7 +23,7 @@ uk:
       down: "Вниз"
       navigation: "Навігація"
       navigation_static_label: "Посилання"
-      log_out: "Розлогінитись"
+      log_out: "Вихід"
       ago: "тому"
     flash:
       successful: "%{name} успішно %{action}"
@@ -42,9 +42,9 @@ uk:
       message: "Повідомлення"
     actions:
       dashboard:
-        title: "Адміністрування сайту"
-        menu: "Основна"
-        breadcrumb: "Основна"
+        title: "Головна"
+        menu: "Головна"
+        breadcrumb: "Головна"
       index:
         title: "Список %{model_label_plural}"
         menu: "Список"
