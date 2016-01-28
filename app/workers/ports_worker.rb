@@ -13,13 +13,11 @@ class PortsWorker
 
     begin
       Pusher.trigger("ports_updater", "report", {notification_text: notification_text(result, Time.now.to_i - start_time.to_i)})
-      begin
-        `notify-send "Оновлення інформації про порти" "#{notification_text(result, Time.now.to_i - start_time.to_i, user)}" -i gtk-info`
-      rescue Pusher::Error => e
-        puts e.message
-      end
     rescue Pusher::Error => e
       puts e.message
+    end
+    begin
+      `notify-send "Оновлення інформації про порти" "#{notification_text(result, Time.now.to_i - start_time.to_i, user)}" -i gtk-info`
     end
   end
 end

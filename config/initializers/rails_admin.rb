@@ -60,7 +60,7 @@ RailsAdmin.config do |config|
       only ['Customer']
     end
     update_ports_info do
-      only ['Node', 'Zte', 'Dlink', 'Cisco', 'Iskratel']
+      only ['Node', 'Zte', 'Dlink', 'Cisco', 'Iskratel', 'Port']
     end
 
     show_in_app
@@ -199,6 +199,9 @@ RailsAdmin.config do |config|
     navigation_label 'Історія'
     label 'версія'
     label_plural 'версії'
+    list do
+      exclude_fields :id, :transaction_id
+    end
   end
 
   config.model PaperTrail::VersionAssociation do
