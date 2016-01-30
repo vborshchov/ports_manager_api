@@ -2,6 +2,7 @@ class PortsWorker
   require "pusher"
   include Sidekiq::Worker
   include ApplicationHelper
+  require 'eventmachine'
   sidekiq_options retry: false
 
   def perform(node_ids, user)
@@ -13,6 +14,10 @@ class PortsWorker
 
     begin
       Pusher.trigger("ports_updater", "report", {notification_text: notification_text(result, Time.now.to_i - start_time.to_i)})
+      EM.run {
+        client = Faye::Client.new('http://10.80.12.202:3000/faye')
+        client.publish('/events', 'message' => notification_text(result, Time.now.to_i - start_time.to_i, user))
+      }
     rescue Pusher::Error => e
       puts e.message
     end

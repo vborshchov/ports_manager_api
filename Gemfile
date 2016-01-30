@@ -84,5 +84,7 @@ gem 'redis', '~>3.2'
 gem 'sidekiq'
 gem 'sinatra', :require => nil
 gem 'pusher'
+gem 'faye-rails', '~> 2.0'
+gem 'thin'
 
 ruby "2.2.1"

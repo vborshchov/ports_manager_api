@@ -1,22 +1,17 @@
+//= require faye
 //= require_tree .
 
 $(document).on('ready', function(){
-  // Pusher.log = function(message) {
-  //    if (window.console && window.console.log) {
-  //      window.console.log(message);
-  //    }
-  //  };
-
-  var pusher = new Pusher('0bb4888942c37f010824');
-
-  var channel = pusher.subscribe('ports_updater');
   $.notify.defaults({
     className: "info",
     position: "bottom left",
     autoHide: false
   });
-  channel.bind('report', function(data) {
-    $.notify(data['notification_text']);
+
+  var client = new Faye.Client('/faye');
+  client.subscribe('/events', function(playload) {
+    console.log(playload);
+    $.notify(playload.message);
   });
 })
 
