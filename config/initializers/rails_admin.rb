@@ -129,11 +129,13 @@ RailsAdmin.config do |config|
           %w(admin).exclude? bindings[:view]._current_user.role
         end
       end
-      fields :password, :password_confirmation do
-        visible do
-          %w(admin).include? bindings[:view]._current_user.role
-        end
-      end
+      field :password do; end
+      field :password_confirmation do; end
+      # fields :password, :password_confirmation do
+      #   visible do
+      #     %w(admin).include? bindings[:view]._current_user.role
+      #   end
+      # end
       field :role, :enum do
         enum do
           if bindings[:view]._current_user.role == "moderator"
