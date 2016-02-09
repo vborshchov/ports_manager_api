@@ -5,8 +5,8 @@ every 1.day, at: '23:30' do
   rake "nodes:update_ports"
 end
 
-every :sunday, at: '23:20' do
-  command "rm #{RAILS_ROOT}/log/*.log"
+every :month, at: '23:20' do
+  # command "rm #{RAILS_ROOT}/log/*.log"
 end
 
 # Learn more: http://github.com/javan/whenever
