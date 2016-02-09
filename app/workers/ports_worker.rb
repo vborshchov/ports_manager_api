@@ -1,5 +1,4 @@
 class PortsWorker
-  require "pusher"
   include Sidekiq::Worker
   include ApplicationHelper
   require 'eventmachine'
@@ -9,16 +8,12 @@ class PortsWorker
     start_time = Time.now
     result = update_ports_info(node_ids)
 
-    url = "https://#{ENV["PUSHER_KEY"]}:#{ENV["PUSHER_SECRET"]}@api.pusherapp.com/apps/#{ENV["PUSHER_APP_ID"]}"
-    Pusher.url = url
-
     begin
-      Pusher.trigger("ports_updater", "report", {notification_text: notification_text(result, Time.now.to_i - start_time.to_i)})
       EM.run {
-        client = Faye::Client.new('http://10.80.12.202:3000/faye')
+        client = Faye::Client.new("http://#{ENV['APP_URL'].chomp}:#{ENV['APP_PORT'].chomp}/faye")
         client.publish('/events', 'message' => notification_text(result, Time.now.to_i - start_time.to_i, user))
       }
-    rescue Pusher::Error => e
+    rescue Exception => e
       puts e.message
     end
     begin
