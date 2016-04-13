@@ -41,7 +41,7 @@ RailsAdmin.config do |config|
     index                         # mandatory
     new
     export do
-      only ['Node', 'Zte', 'Dlink', 'Cisco', 'Iskratel', 'Port', 'Customer']
+      only ['Node', 'Zte', 'Dlink', 'Cisco', 'Iskratel', 'Huawei', 'Port', 'Customer']
     end
     bulk_delete do
       only ['Customer', 'Port', 'User', 'Location', 'Comment']
@@ -158,7 +158,7 @@ RailsAdmin.config do |config|
     end
   end
 
-  %w(Node Cisco Zte Dlink Iskratel).each do |imodel|
+  %w(Node Cisco Zte Dlink Iskratel Huawei).each do |imodel|
     config.model "#{imodel}" do
       list do
         # scopes [nil, :without_ports]
@@ -171,6 +171,11 @@ RailsAdmin.config do |config|
 
       edit do
         exclude_fields :ports
+        field :type, :enum do
+          enum do
+            ['Zte', 'Dlink', 'Cisco', 'Huawei', 'Iskratel']
+          end
+        end
       end
     end
   end

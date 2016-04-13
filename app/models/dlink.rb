@@ -29,7 +29,7 @@ class Dlink < Node
       )
       tn.waitfor(/:/) do |banner|
         if banner.match(/UserName/)
-          tn.cmd("#{ENV["DLINK_USERNAME"]}\n#{ENV["DLINK_PASSWORD"]}") #{ |c| print c }
+          tn.cmd("#{ENV['DLINK_USERNAME']}\n#{ENV['DLINK_PASSWORD']}") #{ |c| print c }
           response << tn.cmd("show ports")
           7.times { response << tn.cmd("n") }
           response << tn.cmd("q")

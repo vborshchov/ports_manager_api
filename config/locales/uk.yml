@@ -43,6 +43,12 @@ uk:
         few: "iskratel"
         many: "iskratel"
         other: "iskratel"
+      huawei:
+        zero: "huawei"
+        one: "huawei"
+        few: "huawei"
+        many: "huawei"
+        other: "huawei"
       customer:
         zero: "Абонентів"
         one: "Абонент"

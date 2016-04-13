@@ -1,5 +1,7 @@
+require 'dotenv'
 require "#{Rails.root}/app/helpers/application_helper"
-include ApplicationHelper
+include Applicat
+ionHelper
 
 namespace :nodes do
   desc "Update information about all ports of all nodes
@@ -12,11 +14,12 @@ namespace :nodes do
     model = args[:model_name].capitalize
 
     if node_ids_array.empty?
-      array = model.constantize.where(type: ["Cisco", "Dlink", "Iskratel", "Zte"]).pluck(:id)
+      array = model.constantize.pluck(:id)
     else
-      array = model.constantize.where(type: ["Cisco", "Dlink", "Iskratel", "Zte"]).pluck(:id) & node_ids_array
+      array = model.constantize.pluck(:id) & node_ids_array
     end
-
+    puts ENV['ZTE_USERNAME'].to_s + "    ZTE   asdfsadfasdf sdf asdfasdf sadf --"
+    puts ENV['DLINK_USERNAME'].to_s + "   DLINK   asdfsadfasdf sdf asdfasdf sadf --"
     result = update_ports_info(array)
 
     begin
