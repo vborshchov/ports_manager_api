@@ -47,6 +47,7 @@ module Portsmanagerapi
     config.time_zone = 'Kyiv'
     config.active_record.default_timezone = :local
 
+    config.middleware.use Rack::Attack
     config.middleware.delete Rack::Lock
     config.middleware.use FayeRails::Middleware, mount: '/faye', :timeout => 25
   end

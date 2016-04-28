@@ -86,5 +86,6 @@ gem 'sinatra', :require => nil
 gem 'pusher'
 gem 'faye-rails', '~> 2.0'
 gem 'thin'
+gem 'rack-attack'
 
 ruby "2.2.1"
