@@ -20,35 +20,13 @@ class Rack::Attack
   # counted by rack-attack and this throttle may be activated too
   # quickly. If so, enable the condition to exclude them from tracking.
 
-  # Throttle all requests by IP (60rpm)
+  # Throttle all requests by IP (10rps)
   #
   # Key: "rack::attack:#{Time.now.to_i/:period}:req/ip:#{req.ip}"
-  # throttle('req/ip', :limit => 300, :period => 5.minutes) do |req|
-  #  req.ip unless req.path.start_with?('/assets')
-  # end
-
-  Rack::Attack.throttle('req/ip', :limit => 5, :period => 1.second) do |req|
-    # If the return value is truthy, the cache key for the return value
-    # is incremented and compared with the limit. In this case:
-    #   "rack::attack:#{Time.now.to_i/1.second}:req/ip:#{req.ip}"
-    #
-    # If falsy, the cache key is neither incremented nor checked.
-
-    req.ip unless req.path.start_with?('/assets')
+  Rack::Attack.throttle('req/ip', :limit => 50, :period => 5.seconds) do |req|
+   req.ip #unless req.path.start_with?('/assets')
   end
 
-  ### Prevent Brute-Force Login Attacks ###
-
-  # The most common brute-force login attack is a brute-force password
-  # attack where an attacker simply tries a large number of emails and
-  # passwords to see if any credentials match.
-  #
-  # Another common method of attack is to use a swarm of computers with
-  # different IPs to try brute-forcing a password for a specific account.
-
-  # Throttle POST requests to /login by IP address
-  #
-  # Key: "rack::attack:#{Time.now.to_i/:period}:logins/ip:#{req.ip}"
   throttle('logins/ip', :limit => 5, :period => 20.seconds) do |req|
    if req.path == '/users/sing_in' && req.post?
      req.ip
@@ -78,13 +56,17 @@ class Rack::Attack
   # If you want to return 503 so that the attacker might be fooled into
   # believing that they've successfully broken your app (or you just want to
   # customize the response), then uncomment these lines.
-  # self.throttled_response = lambda do |env|
-  #  [ 503,  # status
-  #    {},   # headers
-  #    ['']] # body
-  # end
-  # Rack::Attack.blacklist('block 127.0.0.1') do |req|
-  #   # Requests are blocked if the return value is truthy
-  #   '127.0.0.1' == req.ip
-  # end
+  self.throttled_response = lambda do |env|
+   [ 503,  # status
+     {},   # headers
+     ['']] # body
+  end
+
+  # After 50 requests with incorrect auth in 10 second,
+  # block all requests from that IP for 1 hour.
+ Rack::Attack.blacklist('basic DOS') do |req|
+   Rack::Attack::Allow2Ban.filter(req.ip, :maxretry => 100, :findtime => 10.seconds, :bantime => 1.minutes) do
+     req.ip
+   end
+  end
 end
