@@ -65,7 +65,7 @@ class Rack::Attack
   # After 50 requests with incorrect auth in 10 second,
   # block all requests from that IP for 1 hour.
  Rack::Attack.blacklist('basic DOS') do |req|
-   Rack::Attack::Allow2Ban.filter(req.ip, :maxretry => 100, :findtime => 10.seconds, :bantime => 1.minutes) do
+   Rack::Attack::Allow2Ban.filter(req.ip, :maxretry => 100, :findtime => 10.seconds, :bantime => 30.minutes) do
      req.ip
    end
   end
