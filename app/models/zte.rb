@@ -35,7 +35,11 @@ class Zte < Node
         tn.waitfor(/:/) do |banner|
           zte_model_regex = Regexp.new("#{zte_model}|ZTE")
           if banner.match(zte_model_regex)
-            tn.cmd("#{ENV['ZTE_USERNAME']}\n#{ENV['ZTE_PASSWORD']}") #{ |c| print c }
+            tn.cmd("#{ENV['ZTE_USERNAME']}\n#{ENV['ZTE_PASSWORD']}") do |output|
+              if output.match(/failure/)
+                tn.cmd("#{ENV['ZTE_USERNAME']}\n#{ENV['ZTE_NEW_PASSWORD']}") #{ |c| print c }
+              end
+            end
             port_number.to_i.times do |i|
               port = zte_model =~ /5250/ ? "1/#{i+1}" : i+1
               response << tn.cmd("show port #{port}")
