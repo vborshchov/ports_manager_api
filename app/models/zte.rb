@@ -71,7 +71,7 @@ class Zte < Node
         .reject(&:empty?)
         .each do |line|
           case line
-            when /PortId|Description|PortName|PortEnable/
+            when /PortId|PortName|Description|PortEnable/
               lines << line.match(/[A-Z]\w+(?= *:) *: (\S+)\s*/)[1]
             when /Link/
               lines << line.match(/(?<=Link           : )(\w+)/)[1]
@@ -79,9 +79,9 @@ class Zte < Node
         end
     lines
         .slice_before(/\A1*\/*\d{1,2}\z/)
-        .map do |id, description = "", port_enable, link|
+        .map do |id, name="", description="", port_enable, link|
           state = port_enable == "enabled" ? link : "admin down"
-          {name: id, description: description, state: state}
+          {name: id, description: [name, description].compact.reject(&:empty?).join("|"), state: state}
         end
   end
 end
