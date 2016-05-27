@@ -1,0 +1,219 @@
+<%= javascript_tag do %>
+  window.rdata = <%= @data %>;
+  window.nodes = <%= @nodes %>;
+  window.admin_down = <%= @admin_down %>;
+  window.down = <%= @down %>;
+  window.up = <%= @up %>;
+<% end %>
+
+<script>
+  function showCharts () {
+    var data = [];
+
+    rdata.forEach(function(item, i, arr) {
+      data.push([Date.UTC(item[0][0],item[0][1],item[0][2]), item[1]])
+    });
+
+    Highcharts.setOptions({
+      lang: {
+        months: ['Січень', 'Лютий', 'Березень', 'Квітень', 'Травень', 'Червень',  'Липень', 'Серпень', 'Вересень', 'Жовтень', 'Листопад', 'Грудень'],
+        shortMonths: ['Січ', 'Лют', 'Бер', 'Кві', 'Тра', 'Чер',  'Лип', 'Сер', 'Вер', 'Жов', 'Лист', 'Груд'],
+        weekdays: ['Неділя', 'Понеділок', 'Вівторок', 'Середа', 'Четвер', 'П`ятниця', 'Субота', ],
+        decimalPoint: ',',
+        resetZoom: 'Скинути збільшення',
+        downloadPNG: 'Зберегти як PNG',
+        downloadJPEG: 'Зберегти як JPEG',
+        downloadPDF: 'Зберегти як PDF',
+        downloadSVG: 'Зберегти як SVG',
+        exportButtonTitle: 'Експортувати графік',
+        loading: 'Завантаження статистичних даних ...',
+        printButtonTitle: 'Друкувати',
+        resetZoomTitle: 'Скинути збільшення'
+      }
+    });
+
+    var chart = new Highcharts.Chart({
+      chart: {
+        zoomType: 'x',
+        renderTo: 'line'
+      },
+      title: {
+        text: 'Кількість оновлених портів подобово'
+      },
+      subtitle: {
+        text: document.ontouchstart === undefined ?
+            'Виділіть мишкою зону на графіку для збільшення' : ''
+      },
+      xAxis: {
+        type: 'datetime'
+      },
+      yAxis: {
+        title: {
+          text: 'Кількість'
+        }
+      },
+      legend: {
+        enabled: false
+      },
+      plotOptions: {
+        area: {
+          fillColor: {
+            linearGradient: {
+              x1: 1,
+              y1: 0,
+              x2: 0,
+              y2: 1
+            },
+            stops: [
+              [0, Highcharts.getOptions().colors[0]],
+              [1, Highcharts.Color(Highcharts.getOptions().colors[0]).setOpacity(0).get('rgba')]
+            ]
+          },
+          marker: {
+            radius: 3
+          },
+          lineWidth: 2,
+          states: {
+            hover: {
+              lineWidth: 1
+            }
+          },
+          threshold: null
+        }
+      },
+
+      series: [{
+        type: 'area',
+        name: 'кількість',
+        data: (data)
+      }]
+    });
+
+    var pie_chart = new Highcharts.Chart({
+      chart: {
+        plotBackgroundColor: null,
+        plotBorderWidth: null,
+        plotShadow: false,
+        type: 'pie',
+        renderTo: 'pie'
+      },
+      title: {
+        text: 'Загальна кількість пристроїв'
+      },
+      tooltip: {
+        pointFormat: '{series.name}: <b>{point.y}</b>({point.percentage:.1f}%)'
+      },
+      plotOptions: {
+        pie: {
+          allowPointSelect: true,
+          cursor: 'pointer',
+          dataLabels: {
+            enabled: false
+          },
+          showInLegend: true
+        }
+      },
+      series: [{
+        name: 'Пристрої',
+        colorByPoint: true,
+        data: [{
+          name: 'Cisco',
+          y: <%= @nodes[0] %>
+        }, {
+          name: 'Dlink',
+          // sliced: true,
+          // selected: true,
+          y: <%= @nodes[1] %>
+        }, {
+          name: 'Huawei',
+          y: <%= @nodes[2] %>
+        }, {
+          name: 'Iskratel',
+          y: <%= @nodes[3] %>
+        }, {
+          name: 'Zte',
+          y: <%= @nodes[4] %>
+        }]
+      }]
+    });
+
+    var staked_chart = new Highcharts.Chart({
+      chart: {
+        type: 'column',
+        renderTo: 'stacked'
+      },
+      title: {
+        text: 'Кількість портів по статусах'
+      },
+      xAxis: {
+        categories: ['Cisco', 'Dlink', 'Huawei', 'Iskratel', 'Zte']
+      },
+      yAxis: {
+        min: 0,
+        title: {
+          text: 'кількість'
+        },
+        stackLabels: {
+          enabled: true,
+          style: {
+            fontWeight: 'bold',
+            color: (Highcharts.theme && Highcharts.theme.textColor) || 'gray'
+          }
+        }
+      },
+      legend: {
+        align: 'center',
+        x: -30,
+        verticalAlign: 'top',
+        y: 25,
+        floating: true,
+        backgroundColor: (Highcharts.theme && Highcharts.theme.background2) || 'white',
+        borderColor: '#CCC',
+        borderWidth: 1,
+        shadow: false
+      },
+      tooltip: {
+        headerFormat: '<b>{point.x}</b><br/>',
+        pointFormat: '{series.name}: {point.y}<br/>Всього: {point.stackTotal}'
+      },
+      plotOptions: {
+        column: {
+          stacking: 'normal',
+          dataLabels: {
+            enabled: true,
+            color: (Highcharts.theme && Highcharts.theme.dataLabelsColor) || 'white',
+            style: {
+              textShadow: '0 0 3px black'
+            }
+          }
+        }
+      },
+      series: [{
+        name: 'admin down',
+        color: '#D9534F',
+        data: <%= @admin_down %>
+      }, {
+        name: 'down',
+        color: '#FFBC75',
+        data: <%= @down %>
+      }, {
+        name: 'up',
+        color: '#5FBA7D',
+        data: <%= @up %>
+      }]
+    });
+  };
+
+  $(document).on('rails_admin.dom_ready',  function () {
+    showCharts();
+  });
+
+</script>
+
+<div class="row"></div>
+  <div id="stacked" class="col-sm-12 col-lg-6"></div>
+  <div id="pie" class="col-sm-12 col-lg-6"></div>
+</div>
+<div class="row">
+  <div id="line" class="col-xs-12"></div>
+</div>

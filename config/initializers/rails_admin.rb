@@ -5,6 +5,8 @@ require File.join(Rails.root, "lib", "rails_admin", "customer_ports")
 PaperTrail.config.version_limit = 5
 
 RailsAdmin.config do |config|
+  require Rails.root.join('lib', 'rails_admin.rb')
+
   config.main_app_name = [ "Менеджер портів", ""]
 
   ### Popular gems integration

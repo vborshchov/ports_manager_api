@@ -1,4 +1,8 @@
 //= require faye
+//= require highcharts
+//= require highcharts/modules/drilldown
+//= require highcharts/modules/exporting
+//= require highcharts/highcharts-more
 //= require_tree .
 
 $(document).on('ready', function(){

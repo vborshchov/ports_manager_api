@@ -138,6 +138,8 @@ GEM
       activesupport (>= 4.1.0)
     haml (4.0.7)
       tilt
+    highcharts-rails (4.2.5)
+      railties (>= 3.1)
     hike (1.2.3)
     http_parser.rb (0.6.0)
     httparty (0.13.7)
@@ -351,6 +353,7 @@ DEPENDENCIES
   ffaker
   font-awesome-rails
   furatto
+  highcharts-rails
   jquery-rails
   paper_trail (~> 4.0.0)
   puma
