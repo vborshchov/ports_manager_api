@@ -16,6 +16,14 @@
 						weekdays: ['Неділя', 'Понеділок', 'Вівторок', 'Середа', 'Четвер', 'П`ятниця', 'Субота', ],
             decimalPoint: ',',
             resetZoom: 'Скинути збільшення',
+            downloadPNG: 'Зберегти як PNG',
+            downloadJPEG: 'Зберегти як JPEG',
+            downloadPDF: 'Зберегти як PDF',
+            downloadSVG: 'Зберегти як SVG',
+            exportButtonTitle: 'Експортувати графік',
+            loading: 'Завантаження статистичних даних ...',
+            printButtonTitle: 'Друкувати',
+            resetZoomTitle: 'Скинути збільшення',
 					}
 				});
 
@@ -75,9 +83,126 @@
             }]
         });
 
+        $('#pie').highcharts({
+            chart: {
+                plotBackgroundColor: null,
+                plotBorderWidth: null,
+                plotShadow: false,
+                type: 'pie'
+            },
+            title: {
+                text: 'Загальна кількість пристроїв'
+            },
+            tooltip: {
+                pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+            },
+            plotOptions: {
+                pie: {
+                    allowPointSelect: true,
+                    cursor: 'pointer',
+                    dataLabels: {
+                        enabled: false
+                    },
+                    showInLegend: true
+                }
+            },
+            series: [{
+                name: 'Пристрої',
+                colorByPoint: true,
+                data: [{
+                    name: 'Cisco'
+                    y: <%= @nodes[0] %>
+                }, {
+                    name: 'Dlink',
+                    y: <%= @nodes[1] %>
+                    sliced: true,
+                    selected: true
+                }, {
+                    name: 'Huawei',
+                    y: <%= @nodes[2] %>
+                }, {
+                    name: 'Iskratel',
+                    y: <%= @nodes[3] %>
+                }, {
+                    name: 'Zte',
+                    y: <%= @nodes[4] %>
+                }]
+            }]
+        });
+
+			$('#stacked').highcharts({
+        chart: {
+            type: 'column'
+        },
+        title: {
+            text: 'Кількість портів по статусах'
+        },
+        xAxis: {
+            categories: ['Cisco', 'Dlink', 'Huawei', 'Iskratel', 'Zte']
+        },
+        yAxis: {
+            min: 0,
+            title: {
+                text: 'кількість'
+            },
+            stackLabels: {
+                enabled: true,
+                style: {
+                    fontWeight: 'bold',
+                    color: (Highcharts.theme && Highcharts.theme.textColor) || 'gray'
+                }
+            }
+        },
+        legend: {
+            align: 'center',
+            x: -30,
+            verticalAlign: 'top',
+            y: 25,
+            floating: true,
+            backgroundColor: (Highcharts.theme && Highcharts.theme.background2) || 'white',
+            borderColor: '#CCC',
+            borderWidth: 1,
+            shadow: false
+        },
+        tooltip: {
+            headerFormat: '<b>{point.x}</b><br/>',
+            pointFormat: '{series.name}: {point.y}<br/>Всього: {point.stackTotal}'
+        },
+        plotOptions: {
+            column: {
+                stacking: 'normal',
+                dataLabels: {
+                    enabled: true,
+                    color: (Highcharts.theme && Highcharts.theme.dataLabelsColor) || 'white',
+                    style: {
+                        textShadow: '0 0 3px black'
+                    }
+                }
+            }
+        },
+        series: [{
+            name: 'admin down',
+            color: '#D9534F',
+            data: <%= @admin_down %>
+        }, {
+            name: 'down',
+            color: '#FFBC75',
+            data: <%= @down %>
+        }, {
+            name: 'up',
+            color: '#5FBA7D',
+            data: <%= @up %>
+        }]
+    });
+
+
 });
 </script>
 
-<div id="container" style="min-width: 310px; height: 400px; margin: 0 auto">
-
+<div class="row">
+	<div id="container" class="col-xs-12"></div>
+</div>
+<div class="row"></div>
+	<div id="pie" class="col-sm-12 col-lg-6"></div>
+	<div id="stacked" class="col-sm-12 col-lg-6"></div>
 </div>
