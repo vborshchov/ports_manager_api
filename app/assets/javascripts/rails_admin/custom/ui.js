@@ -1,6 +1,7 @@
 //= require faye
 //= require_tree .
 
+
 $(document).on('ready', function(){
   $.notify.defaults({
     className: "info",

@@ -24,5 +24,10 @@ class Port < ActiveRecord::Base
 
   scope :reserved, -> { where(reserved: true) }
   scope :not_reserved, -> { where(reserved: false) }
+  scope :updated_per_day, -> { all.group_by(&:group_by_criteria).map {|k,v| [k, v.length]}.sort }
+
+  def group_by_criteria
+    updated_at.to_date # Uses 'to_i' instead of 'to_s' for highchart
+  end
 
 end
