@@ -87,6 +87,6 @@ gem 'pusher'
 gem 'faye-rails', '~> 2.0'
 gem 'thin'
 gem 'rack-attack'
-gem 'lazy_high_charts'
+gem 'highcharts-rails'
 
 ruby "2.2.1"

@@ -1,9 +1,5 @@
-<script src="https://code.highcharts.com/highcharts.js"></script>
-<script src="https://code.highcharts.com/modules/exporting.js"></script>
-
 <script>
-$(document).on('ready page:load', function(){
-	$(function () {
+	function showCharts () {
  				var data = [];
 
     		<% @data.each do |element| %>
@@ -37,7 +33,7 @@ $(document).on('ready page:load', function(){
             },
             subtitle: {
                 text: document.ontouchstart === undefined ?
-                        'Виделіть зону мишкою на графіку для збільшення' : 'фіва'
+                        'Виділіть зону мишкою на графіку для збільшення' : ''
             },
             xAxis: {
                 type: 'datetime'
@@ -195,10 +191,13 @@ $(document).on('ready page:load', function(){
             data: <%= @up %>
         }]
     });
-
-
+};
+$(document).on('rails_admin.dom_ready',  function () {
+	showCharts();
 });
-});
+// $(document).on('ready pjax:complete',  function () {
+// 	showCharts();
+// });
 </script>
 
 <div class="row">
