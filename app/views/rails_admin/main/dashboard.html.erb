@@ -2,6 +2,7 @@
 <script src="https://code.highcharts.com/modules/exporting.js"></script>
 
 <script>
+$(document).on('ready page:load', function(){
 	$(function () {
  				var data = [];
 
@@ -94,7 +95,7 @@
                 text: 'Загальна кількість пристроїв'
             },
             tooltip: {
-                pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+                pointFormat: '{series.name}: <b>{point.y}</b>({point.percentage:.1f}%)'
             },
             plotOptions: {
                 pie: {
@@ -110,13 +111,13 @@
                 name: 'Пристрої',
                 colorByPoint: true,
                 data: [{
-                    name: 'Cisco'
+                    name: 'Cisco',
                     y: <%= @nodes[0] %>
                 }, {
                     name: 'Dlink',
+                    // sliced: true,
+                    // selected: true,
                     y: <%= @nodes[1] %>
-                    sliced: true,
-                    selected: true
                 }, {
                     name: 'Huawei',
                     y: <%= @nodes[2] %>
@@ -196,6 +197,7 @@
     });
 
 
+});
 });
 </script>
 
