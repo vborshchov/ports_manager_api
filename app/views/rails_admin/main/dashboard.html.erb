@@ -1,6 +1,7 @@
 <%= javascript_tag do %>
   window.rdata = <%= @data %>;
-  window.nodes = <%= @nodes %>;
+  window.pie_data = [<%= @pie_data %>];
+  window.pie_drilldown = [<%= @pie_drilldown %>];
   window.admin_down = <%= @admin_down %>;
   window.down = <%= @down %>;
   window.up = <%= @up %>;
@@ -28,6 +29,7 @@
         exportButtonTitle: 'Експортувати графік',
         loading: 'Завантаження статистичних даних ...',
         printButtonTitle: 'Друкувати',
+        drillUpText: 'Назад до {series.name}в',
         resetZoomTitle: 'Скинути збільшення'
       }
     });
@@ -89,6 +91,8 @@
       }]
     });
 
+
+
     var pie_chart = new Highcharts.Chart({
       chart: {
         plotBackgroundColor: null,
@@ -116,26 +120,18 @@
       series: [{
         name: 'Пристрої',
         colorByPoint: true,
-        data: [{
-          name: 'Cisco',
-          y: <%= @nodes[0] %>
-        }, {
-          name: 'Dlink',
-          // sliced: true,
-          // selected: true,
-          y: <%= @nodes[1] %>
-        }, {
-          name: 'Huawei',
-          y: <%= @nodes[2] %>
-        }, {
-          name: 'Iskratel',
-          y: <%= @nodes[3] %>
-        }, {
-          name: 'Zte',
-          y: <%= @nodes[4] %>
-        }]
-      }]
+        data: pie_data
+      }],
+      drilldown: {
+            activeDataLabelStyle: {
+                color: 'white',
+                textShadow: '0 0 2px black, 0 0 2px black'
+            },
+            series: pie_drilldown
+        }
     });
+
+
 
     var staked_chart = new Highcharts.Chart({
       chart: {

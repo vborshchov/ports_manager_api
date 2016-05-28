@@ -15,10 +15,35 @@ module RailsAdmin
         register_instance_option :controller do
           proc do
             #You can specify instance variables
+
+          # Time series chart
             @data = Port.updated_per_day.drop(7)
 
-            @nodes = Node.group(:type).count.values
+          # Pie chart
+            nodes = Node.group(:type).count
+            @pie_data = []
+            nodes.each do |node, quantity|
+              @pie_data <<  "{
+                              name: '#{node}',
+                              y: #{quantity},
+                              drilldown: '#{node.downcase}'
+                            }"
+            end
+            @pie_data = @pie_data.join(",\n").html_safe
 
+            @pie_drilldown = []
+            nodes.each do |node, quantity|
+              data = node.constantize.group(:model).count.to_a
+              @pie_drilldown << "{
+                                  id: '#{node.downcase}',
+                                  name: '#{node}',
+                                  data: #{data}
+                                }"
+            end
+            @pie_drilldown = @pie_drilldown.join(",\n").html_safe
+
+          # Bar chart
+            # bar_chart = Node.joins(:ports).group(:type, :state).count
             admin_down = Node.joins(:ports).where("ports.state = ?", "admin down").group(:type).count
             down = Node.joins(:ports).where("ports.state = ?", "down").group(:type).count
             up = Node.joins(:ports).where("ports.state = ?", "up").group(:type).count
@@ -26,7 +51,7 @@ module RailsAdmin
             @admin_down=[]
             @down=[]
             @up=[]
-            ['Cisco', 'Dlink', 'Huawei', 'Iskratel', 'Zte'].each do |node|
+            nodes.each do |node, quantity|
               @admin_down << admin_down[node].to_i
               @down << down[node].to_i
               @up << up[node].to_i
@@ -56,7 +81,7 @@ module RailsAdmin
         end
 
         register_instance_option :statistics? do
-          true
+          false
         end
       end
     end
