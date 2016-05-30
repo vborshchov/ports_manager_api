@@ -2,6 +2,7 @@
 //= require highcharts
 //= require highcharts/modules/drilldown
 //= require highcharts/modules/exporting
+//= require highcharts/modules/offline-exporting
 //= require highcharts/highcharts-more
 //= require_tree .
 
