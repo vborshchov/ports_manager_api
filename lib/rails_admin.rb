@@ -91,9 +91,20 @@ module RailsAdmin
                 data = node.constantize.joins(:ports).where("ports.state = ?", "#{state.split('_').join(" ")}").group(:ip).count.to_a.each{|a| a[0] = Node.find_by_ip(a[0]).name}.sort {|a, b| b[1] <=> a[1]}
                 data = data.map{|k, v| "{name: '#{k}', y: #{v}}"}.join(", ").html_safe
                 @bar_drilldown << "{
-                                    type: 'column',
+                                    type: 'bar',
                                     id: '#{state}_#{node.downcase}',
                                     name: 'Порти на #{node} в статусі #{state}',
+                                    dataLabels: {
+                                      enabled: true,
+                                      rotation: -90,
+                                      color: '#FFFFFF',
+                                      align: 'right',
+                                      format: '{point.y}', // one decimal
+                                      y: 10, // 10 pixels down from the top
+                                      style: {
+                                        fontSize: '11px'
+                                      }
+                                    },
                                     data: [#{data}]
                                   }"
               end

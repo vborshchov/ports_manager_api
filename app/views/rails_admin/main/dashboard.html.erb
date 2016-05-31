@@ -163,7 +163,6 @@
       },
       xAxis: {
         type: 'category'
-        // categories: 'Виробник'
       },
       yAxis: {
         min: 0,
@@ -190,8 +189,26 @@
         shadow: false
       },
       tooltip: {
-        headerFormat: '<b>{point.x}</b><br/>',
-        pointFormat: '{series.name}: {point.y}<br/>Всього: {point.stackTotal}'
+            formatter: function() {
+                if(this.series.levelNumber == 1) {
+                     return 'first level';
+                } else {
+                     return  'parents level';
+                }
+            }
+        },
+      // tooltip: {
+      //   headerFormat: '<b>{point.y}</b><br/>',
+      //   pointFormat: '{series.name}: {point.y}<br/>Всього: {point.stackTotal}'
+      // },
+      tooltip: {
+        formatter: function () {
+          if (this.point.stackTotal){
+            return '<b>' + this.point.name + '</b><br/>' + this.series.name + ': ' + '<b>' + this.point.y + '</b><br/>Всього: ' + this.point.total;
+          } else {
+            return this.point.name + ': <b>' + this.point.y + '</b>';
+          }
+        }
       },
       plotOptions: {
         column: {
@@ -219,11 +236,11 @@
         data: [<%= @up %>]
       }],
       drilldown: {
-            activeDataLabelStyle: {
-                color: 'white',
-                textShadow: '0 0 2px black, 0 0 2px black'
-            },
-            series: bar_drilldown
+        activeDataLabelStyle: {
+            color: 'white',
+            textShadow: '0 0 2px black, 0 0 2px black'
+        },
+        series: bar_drilldown
         }
     });
   };
@@ -235,7 +252,7 @@
 </script>
 
 <div class="row"></div>
-  <div id="stacked" class="col-sm-12 col-lg-6"></div>
-  <div id="pie" class="col-sm-12 col-lg-6"></div>
+  <div id="stacked" class="col-sm-12 col-lg-7"></div>
+  <div id="pie" class="col-sm-12 col-lg-5"></div>
   <div id="line" class="col-xs-12"></div>
 </div>
