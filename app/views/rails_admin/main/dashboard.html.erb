@@ -1,10 +1,12 @@
 <%= javascript_tag do %>
   window.rdata = <%= @data %>;
+  window.nodes = <%= @nodes.keys.to_s.html_safe %>;
   window.pie_data = [<%= @pie_data %>];
   window.pie_drilldown = [<%= @pie_drilldown %>];
   window.admin_down = <%= @admin_down %>;
   window.down = <%= @down %>;
   window.up = <%= @up %>;
+  window.bar_drilldown = [<%= @bar_drilldown %>];
 <% end %>
 
 <script>
@@ -29,7 +31,7 @@
         exportButtonTitle: 'Експортувати графік',
         loading: 'Завантаження статистичних даних ...',
         printButtonTitle: 'Друкувати',
-        drillUpText: 'Назад до {series.name}в',
+        drillUpText: 'Назад до {series.name}',
         resetZoomTitle: 'Скинути збільшення'
       }
     });
@@ -37,7 +39,10 @@
     var chart = new Highcharts.Chart({
       chart: {
         zoomType: 'x',
-        renderTo: 'line'
+        renderTo: 'line',
+        animation: {
+          duration: 1500
+        }
       },
       title: {
         text: 'Кількість оновлених портів подобово'
@@ -97,7 +102,7 @@
       chart: {
         plotBackgroundColor: null,
         plotBorderWidth: null,
-        plotShadow: false,
+        plotShadow: true,
         type: 'pie',
         renderTo: 'pie'
       },
@@ -112,7 +117,11 @@
           allowPointSelect: true,
           cursor: 'pointer',
           dataLabels: {
-            enabled: false
+            enabled: true,
+            color: 'black',
+            style: {
+              textShadow: '0 0 3px white'
+            }
           },
           showInLegend: true
         }
@@ -120,6 +129,17 @@
       series: [{
         name: 'Пристрої',
         colorByPoint: true,
+        dataLabels: {
+          enabled: true,
+          formatter: function() {
+            return this.y
+          },
+          distance: -30,
+          color: 'black',
+          style: {
+            textShadow: '0 0 3px white'
+          }
+        },
         data: pie_data
       }],
       drilldown: {
@@ -142,7 +162,7 @@
         text: 'Кількість портів по статусах'
       },
       xAxis: {
-        categories: ['Cisco', 'Dlink', 'Huawei', 'Iskratel', 'Zte']
+        categories: nodes
       },
       yAxis: {
         min: 0,
@@ -187,16 +207,23 @@
       series: [{
         name: 'admin down',
         color: '#D9534F',
-        data: <%= @admin_down %>
+        data: [<%= @admin_down %>]
       }, {
         name: 'down',
         color: '#FFBC75',
-        data: <%= @down %>
+        data: [<%= @down %>]
       }, {
         name: 'up',
         color: '#5FBA7D',
-        data: <%= @up %>
-      }]
+        data: [<%= @up %>]
+      }],
+      drilldown: {
+            activeDataLabelStyle: {
+                color: 'white',
+                textShadow: '0 0 2px black, 0 0 2px black'
+            },
+            series: bar_drilldown
+        }
     });
   };
 
@@ -207,7 +234,12 @@
 </script>
 
 <div class="row"></div>
+<<<<<<< 5f4f44246c06fba506a61c7e68a70120b4ac3760
   <div id="stacked" class="col-sm-12 col-lg-6"></div>
   <div id="pie" class="col-sm-12 col-lg-6"></div>
+=======
+  <div id="stacked" class="col-sm-12"></div>
+  <div id="pie" class="col-sm-12 col-lg-6 col-lg-offset-3"></div>
+>>>>>>> 952729e5f38e8740f2e28828b2ea66477473f00d
   <div id="line" class="col-xs-12"></div>
 </div>
