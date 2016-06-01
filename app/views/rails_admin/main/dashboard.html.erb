@@ -189,19 +189,6 @@
         shadow: false
       },
       tooltip: {
-            formatter: function() {
-                if(this.series.levelNumber == 1) {
-                     return 'first level';
-                } else {
-                     return  'parents level';
-                }
-            }
-        },
-      // tooltip: {
-      //   headerFormat: '<b>{point.y}</b><br/>',
-      //   pointFormat: '{series.name}: {point.y}<br/>Всього: {point.stackTotal}'
-      // },
-      tooltip: {
         formatter: function () {
           if (this.point.stackTotal){
             return '<b>' + this.point.name + '</b><br/>' + this.series.name + ': ' + '<b>' + this.point.y + '</b><br/>Всього: ' + this.point.total;
@@ -241,7 +228,7 @@
             textShadow: '0 0 2px black, 0 0 2px black'
         },
         series: bar_drilldown
-        }
+      }
     });
   };
 
